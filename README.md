@@ -3,7 +3,7 @@
 A modern, single-page resume built with **Angular 22**, **Bootstrap 5.3** and **Tailwind CSS 4**.
 It is purely frontend: no backend, no database. Every push to `main` deploys it to GitHub Pages for free.
 
-**Live:** https://jasonkng.github.io
+**Live:** https://jasonkng.github.io/resume/
 
 Features: light/dark mode (remembers your choice), scroll-in animations (disabled for users who prefer reduced motion),
 active-section navbar, mobile menu, and a **Save as PDF** button that prints a clean, light version of the page.

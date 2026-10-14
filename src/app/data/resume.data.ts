@@ -46,7 +46,7 @@ export const RESUME: Resume = {
     { value: '5+', label: 'Years building enterprise software' },
     { value: '200K', label: 'Concurrent sessions supported' },
     { value: '6-figure', label: 'Annual subscription savings' },
-    { value: '7', label: 'Developers led end-to-end' },
+    { value: '7', label: 'Developers led on the Citibank Taiwan delivery' },
   ],
 
   skillGroups: [
