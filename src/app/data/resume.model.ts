@@ -28,9 +28,15 @@ export interface Profile {
   avatarUrl?: string;
   /** Small status pill in the hero. Remove to hide it. */
   availability?: string;
-  /** Skills featured in the hero's code card. */
-  featuredStack: string[];
+  /** Grouped highlights for the hero's code card, e.g. `backend: ['Java', ...]`. ~3 short items per group fits on one line. */
+  featuredStack: StackGroup[];
   links: SocialLink[];
+}
+
+export interface StackGroup {
+  /** Shown as the object key in the code card, so keep it one lowercase word. */
+  label: string;
+  items: string[];
 }
 
 export interface SocialLink {

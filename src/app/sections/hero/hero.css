@@ -56,6 +56,12 @@
   overflow-x: auto;
 }
 
+/* Second-level code line that soft-wraps with a hanging indent, like an editor. */
+.code-wrap {
+  padding-left: calc(3rem + 2ch);
+  text-indent: -2ch;
+}
+
 .tk-kw {
   color: #c026d3;
 }

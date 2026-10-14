@@ -36,6 +36,7 @@ skills, jobs and education. Edit it and save; TypeScript will flag a missing or 
 | Show your phone number           | Uncomment `phone`. It is off by default to keep it away from scrapers.   |
 | Add a photo                      | Put e.g. `avatar.jpg` in `public/` and set `avatarUrl: 'avatar.jpg'`.     |
 | Add a link (e.g. X, a blog)      | Add `{ label, url, icon }` to `profile.links`.                           |
+| Change the hero code card        | Edit the `{ label, items }` groups in `profile.featuredStack`.           |
 | Hide the "Open to…" badge        | Remove `availability`.                                                   |
 
 Icons are [Bootstrap Icons](https://icons.getbootstrap.com): use the name without the `bi-` prefix (`'linkedin'`, `'database'`).

@@ -7,7 +7,7 @@
 
   <div class="container position-relative">
     <div class="row align-items-center g-5">
-      <div class="col-lg-7" appReveal>
+      <div class="col-lg-6" appReveal>
         @if (profile.avatarUrl) {
           <img
             class="d-block mb-4 tw:size-24 tw:rounded-full tw:object-cover tw:ring-4 tw:ring-brand/20"
@@ -74,7 +74,7 @@
         </ul>
       </div>
 
-      <div class="col-lg-5 d-none d-lg-block no-print" appReveal="150">
+      <div class="col-lg-6 d-none d-lg-block no-print" appReveal="150">
         <div class="code-card surface tw:overflow-hidden" aria-hidden="true">
           <div class="d-flex align-items-center gap-2 px-4 py-3 code-card-bar">
             <span class="dot tw:bg-rose-400"></span>
@@ -82,18 +82,20 @@
             <span class="dot tw:bg-emerald-400"></span>
             <span class="ms-2 tw:text-xs tw:text-muted tw:font-mono">developer.ts</span>
           </div>
-          <div class="code px-4 py-4 tw:font-mono tw:text-sm tw:leading-7">
+          <div class="code px-4 py-4 tw:font-mono tw:text-[0.8125rem] tw:leading-7">
             <div><span class="tk-kw">const</span>&nbsp;<span class="tk-var">developer</span> = &#123;</div>
             <div class="ps-4"><span class="tk-key">name</span>: <span class="tk-str">'{{ profile.name }}'</span>,</div>
             <div class="ps-4"><span class="tk-key">role</span>: <span class="tk-str">'{{ profile.title }}'</span>,</div>
             @if (profile.location) {
               <div class="ps-4"><span class="tk-key">location</span>: <span class="tk-str">'{{ profile.location }}'</span>,</div>
             }
-            <div class="ps-4"><span class="tk-key">stack</span>: [</div>
-            @for (skill of profile.featuredStack; track skill) {
-              <div class="tw:pl-12"><span class="tk-str">'{{ skill }}'</span>,</div>
+            <div class="ps-4"><span class="tk-key">stack</span>: &#123;</div>
+            @for (group of profile.featuredStack; track group.label) {
+              <div class="code-wrap">
+                <span class="tk-key">{{ group.label }}</span>: [@for (item of group.items; track item; let last = $last) {<span class="tk-str tw:whitespace-nowrap">'{{ item }}'</span>@if (!last) {, }}],
+              </div>
             }
-            <div class="ps-4">],</div>
+            <div class="ps-4">&#125;,</div>
             <div class="ps-4"><span class="tk-key">openToWork</span>: <span class="tk-kw">{{ !!profile.availability }}</span>,</div>
             <div>&#125;;</div>
           </div>
