@@ -1,0 +1,23 @@
+<section class="section" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
+  <div class="container">
+    <app-section-heading [eyebrow]="config().label" [title]="config().title" [headingId]="config().id + '-title'" />
+
+    <div class="row g-4">
+      @for (group of skillGroups; track group.name; let i = $index) {
+        <div class="col-md-6 col-xl-4" [appReveal]="(i % 3) * 90">
+          <article class="surface h-100 p-4 tw:transition tw:duration-300 tw:hover:-translate-y-1">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <span class="icon-tile" aria-hidden="true"><i [class]="'bi bi-' + group.icon"></i></span>
+              <h3 class="tw:text-xl tw:font-semibold mb-0">{{ group.name }}</h3>
+            </div>
+            <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0">
+              @for (skill of group.skills; track skill) {
+                <li class="pill">{{ skill }}</li>
+              }
+            </ul>
+          </article>
+        </div>
+      }
+    </div>
+  </div>
+</section>

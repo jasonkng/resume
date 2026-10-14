@@ -1,0 +1,104 @@
+<section id="top" class="hero position-relative overflow-hidden" aria-labelledby="hero-title">
+  <div class="hero-backdrop no-print" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="grid-overlay"></span>
+  </div>
+
+  <div class="container position-relative">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7" appReveal>
+        @if (profile.avatarUrl) {
+          <img
+            class="d-block mb-4 tw:size-24 tw:rounded-full tw:object-cover tw:ring-4 tw:ring-brand/20"
+            [ngSrc]="profile.avatarUrl"
+            width="96"
+            height="96"
+            priority
+            [alt]="'Photo of ' + profile.name"
+          />
+        }
+        @if (profile.availability) {
+          <p class="pill mb-4 no-print">
+            <span class="tw:relative tw:flex tw:size-2.5" aria-hidden="true">
+              <span class="tw:absolute tw:inline-flex tw:size-full tw:rounded-full tw:bg-emerald-400 tw:opacity-75 tw:motion-safe:animate-ping"></span>
+              <span class="tw:relative tw:inline-flex tw:size-2.5 tw:rounded-full tw:bg-emerald-500"></span>
+            </span>
+            {{ profile.availability }}
+          </p>
+        }
+
+        <h1 id="hero-title" class="tw:text-5xl tw:sm:text-6xl tw:xl:text-7xl tw:font-bold tw:leading-[1.05] mb-3">
+          <span class="text-gradient">{{ profile.name }}</span>
+        </h1>
+
+        <p class="tw:text-xl tw:md:text-2xl tw:font-medium tw:text-heading mb-3">
+          {{ profile.title }}
+          @if (profile.location) {
+            <span class="tw:text-muted tw:font-normal">
+              <span aria-hidden="true">·</span>
+              <i class="bi bi-geo-alt ms-1" aria-hidden="true"></i>
+              {{ profile.location }}
+            </span>
+          }
+        </p>
+
+        <p class="tw:text-lg tw:text-muted tw:max-w-2xl mb-4 mb-lg-5">{{ profile.tagline }}</p>
+
+        <div class="d-flex flex-wrap gap-3 mb-4 no-print">
+          @if (profile.email) {
+            <a class="btn btn-brand btn-lg tw:rounded-full tw:px-6" [href]="'mailto:' + profile.email">
+              <i class="bi bi-envelope-fill me-2" aria-hidden="true"></i>Get in touch
+            </a>
+          }
+          <button type="button" class="btn btn-ghost btn-lg tw:rounded-full tw:px-6" (click)="print()">
+            <i class="bi bi-file-earmark-arrow-down me-2" aria-hidden="true"></i>Save as PDF
+          </button>
+        </div>
+
+        <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0 no-print" aria-label="Profiles">
+          @for (link of profile.links; track link.url) {
+            <li>
+              <a
+                class="btn btn-ghost btn-icon"
+                [href]="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="link.label + ' (opens in a new tab)'"
+                [attr.title]="link.label"
+              >
+                <i [class]="'bi bi-' + link.icon" aria-hidden="true"></i>
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="col-lg-5 d-none d-lg-block no-print" appReveal="150">
+        <div class="code-card surface tw:overflow-hidden" aria-hidden="true">
+          <div class="d-flex align-items-center gap-2 px-4 py-3 code-card-bar">
+            <span class="dot tw:bg-rose-400"></span>
+            <span class="dot tw:bg-amber-400"></span>
+            <span class="dot tw:bg-emerald-400"></span>
+            <span class="ms-2 tw:text-xs tw:text-muted tw:font-mono">developer.ts</span>
+          </div>
+          <div class="code px-4 py-4 tw:font-mono tw:text-sm tw:leading-7">
+            <div><span class="tk-kw">const</span>&nbsp;<span class="tk-var">developer</span> = &#123;</div>
+            <div class="ps-4"><span class="tk-key">name</span>: <span class="tk-str">'{{ profile.name }}'</span>,</div>
+            <div class="ps-4"><span class="tk-key">role</span>: <span class="tk-str">'{{ profile.title }}'</span>,</div>
+            @if (profile.location) {
+              <div class="ps-4"><span class="tk-key">location</span>: <span class="tk-str">'{{ profile.location }}'</span>,</div>
+            }
+            <div class="ps-4"><span class="tk-key">stack</span>: [</div>
+            @for (skill of profile.featuredStack; track skill) {
+              <div class="tw:pl-12"><span class="tk-str">'{{ skill }}'</span>,</div>
+            }
+            <div class="ps-4">],</div>
+            <div class="ps-4"><span class="tk-key">openToWork</span>: <span class="tk-kw">{{ !!profile.availability }}</span>,</div>
+            <div>&#125;;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

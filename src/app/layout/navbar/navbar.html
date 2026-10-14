@@ -1,0 +1,55 @@
+<a class="skip-link visually-hidden-focusable btn btn-brand" href="#main">Skip to main content</a>
+
+<header
+  class="site-header fixed-top no-print"
+  [class.is-solid]="scrolled() || menuOpen()"
+>
+  <nav class="navbar navbar-expand-lg tw:py-3" aria-label="Primary">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 me-0" href="#top" (click)="closeMenu()">
+        <span class="monogram tw:size-9 tw:text-sm" aria-hidden="true">{{ profile.initials }}</span>
+        <span class="tw:font-display tw:font-semibold tw:text-heading">{{ profile.name }}</span>
+      </a>
+
+      <div class="d-flex align-items-center gap-2 order-lg-last ms-lg-3">
+        <button
+          type="button"
+          class="btn btn-ghost btn-icon"
+          [attr.aria-label]="themeLabel()"
+          [attr.title]="themeLabel()"
+          (click)="theme.toggle()"
+        >
+          <i class="bi" [class.bi-sun]="theme.isDark()" [class.bi-moon-stars]="!theme.isDark()" aria-hidden="true"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-ghost btn-icon d-lg-none"
+          aria-controls="primary-nav"
+          [attr.aria-expanded]="menuOpen()"
+          aria-label="Toggle navigation"
+          (click)="toggleMenu()"
+        >
+          <i class="bi" [class.bi-x-lg]="menuOpen()" [class.bi-list]="!menuOpen()" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div id="primary-nav" class="collapse navbar-collapse" [class.show]="menuOpen()">
+        <ul class="navbar-nav ms-auto tw:gap-1 tw:pt-3 tw:lg:pt-0">
+          @for (section of sections; track section.id) {
+            <li class="nav-item">
+              <a
+                class="nav-link nav-pill"
+                [href]="'#' + section.id"
+                [class.active]="activeId() === section.id"
+                [attr.aria-current]="activeId() === section.id ? 'location' : null"
+                (click)="closeMenu()"
+              >
+                {{ section.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

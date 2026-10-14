@@ -1,0 +1,64 @@
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0.45rem;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(var(--brand), var(--brand-2), transparent);
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-item + .timeline-item {
+  margin-top: 1.75rem;
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 2.1rem;
+  left: -2rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: var(--bs-body-bg);
+  border: 3px solid var(--brand);
+}
+
+.timeline-dot.is-current {
+  background: var(--brand);
+  box-shadow: 0 0 0 6px color-mix(in oklab, var(--brand) 22%, transparent);
+}
+
+@media (min-width: 768px) {
+  .timeline {
+    padding-left: 3rem;
+  }
+
+  .timeline::before {
+    left: 0.95rem;
+  }
+
+  .timeline-dot {
+    left: -2.5rem;
+  }
+}
+
+@media print {
+  .timeline {
+    padding-left: 0;
+  }
+
+  .timeline::before,
+  .timeline-dot {
+    display: none;
+  }
+}

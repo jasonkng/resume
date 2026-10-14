@@ -1,1 +1,284 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+ * Bootstrap + Tailwind, without the fights.
+ *
+ * - Bootstrap provides the grid, navbar and components (plain class names: `row`, `btn`, `badge`).
+ * - Tailwind provides utilities, always written with the `tw:` prefix (`tw:flex`, `tw:md:text-7xl`)
+ *   so class names never collide with Bootstrap's (`container`, `collapse`, `p-3`...).
+ * - Cascade layers put Tailwind utilities last, so a `tw:` class always beats Bootstrap.
+ * - Tailwind's preflight is skipped; Bootstrap's reboot is the only CSS reset.
+ */
+@layer theme, bootstrap, base, components, utilities;
+
+@import 'bootstrap/dist/css/bootstrap.min.css' layer(bootstrap);
+@import 'tailwindcss/theme.css' layer(theme) prefix(tw);
+@import 'tailwindcss/utilities.css' layer(utilities) prefix(tw);
+
+/* `tw:dark:` follows Bootstrap's theme attribute, so one toggle drives both frameworks. */
+@custom-variant dark (&:where([data-bs-theme='dark'], [data-bs-theme='dark'] *));
+
+/* =========================================================================
+ * THEME — change these to rebrand the whole site.
+ * ========================================================================= */
+:root {
+  --brand: #4f46e5;
+  --brand-2: #0891b2;
+  --sans-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --display-font: 'Space Grotesk', var(--sans-font);
+}
+
+/* Expose the theme to Tailwind as `tw:text-brand`, `tw:bg-brand/10`, `tw:font-display`... */
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-2: var(--brand-2);
+  --color-brand-text: var(--brand-text);
+  --color-heading: var(--heading-color);
+  --color-muted: var(--muted-color);
+  --font-display: var(--display-font);
+}
+
+@layer base {
+  :root,
+  [data-bs-theme='light'] {
+    --bs-body-font-family: var(--sans-font);
+    --bs-body-bg: #f8fafc;
+    --bs-body-color: #334155;
+    --bs-emphasis-color: #0f172a;
+    --bs-heading-color: #0f172a;
+    --bs-secondary-color: #475569;
+    --bs-border-color: #e2e8f0;
+
+    --brand-text: var(--brand);
+    --heading-color: #0f172a;
+    --muted-color: #475569;
+    --grad-from: var(--brand);
+    --grad-to: var(--brand-2);
+    --surface: rgb(255 255 255 / 0.78);
+    --surface-border: rgb(15 23 42 / 0.08);
+    --surface-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 18px 40px -20px rgb(15 23 42 / 0.18);
+    --pill-bg: color-mix(in oklab, var(--brand) 9%, transparent);
+    --pill-border: color-mix(in oklab, var(--brand) 18%, transparent);
+    --grid-line: rgb(15 23 42 / 0.06);
+    color-scheme: light;
+  }
+
+  [data-bs-theme='dark'] {
+    --bs-body-bg: #0b1120;
+    --bs-body-color: #cbd5e1;
+    --bs-emphasis-color: #f8fafc;
+    --bs-heading-color: #f8fafc;
+    --bs-secondary-color: #94a3b8;
+    --bs-border-color: rgb(255 255 255 / 0.1);
+
+    /* Lighter brand tints keep text above WCAG AA contrast on the dark background. */
+    --brand-text: color-mix(in oklab, var(--brand), white 50%);
+    --heading-color: #f8fafc;
+    --muted-color: #94a3b8;
+    --grad-from: color-mix(in oklab, var(--brand), white 40%);
+    --grad-to: color-mix(in oklab, var(--brand-2), white 30%);
+    --surface: rgb(15 23 42 / 0.62);
+    --surface-border: rgb(255 255 255 / 0.08);
+    --surface-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 18px 40px -20px rgb(0 0 0 / 0.6);
+    --pill-bg: color-mix(in oklab, var(--brand) 22%, transparent);
+    --pill-border: color-mix(in oklab, var(--brand) 40%, transparent);
+    --grid-line: rgb(255 255 255 / 0.04);
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--display-font);
+    letter-spacing: -0.02em;
+  }
+
+  /* Only class-less links get the brand colour, so buttons and nav links keep their own. */
+  a:not([class]) {
+    color: var(--brand-text);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand-text);
+    outline-offset: 3px;
+  }
+
+  main:focus {
+    outline: none;
+  }
+}
+
+@layer components {
+  .section {
+    padding-block: clamp(4rem, 9vw, 7rem);
+  }
+
+  .eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brand-text);
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, var(--grad-from), var(--grad-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .surface {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 1.25rem;
+    box-shadow: var(--surface-shadow);
+    backdrop-filter: blur(12px);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--heading-color);
+    background: var(--pill-bg);
+    border: 1px solid var(--pill-border);
+  }
+
+  .monogram {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 0.75rem;
+    font-family: var(--display-font);
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  }
+
+  .icon-tile {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.85rem;
+    font-size: 1.25rem;
+    color: var(--brand-text);
+    background: var(--pill-bg);
+  }
+
+  /* Bootstrap button variants driven by the brand colour. */
+  .btn-brand {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--brand);
+    --bs-btn-border-color: var(--brand);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: color-mix(in oklab, var(--brand), black 14%);
+    --bs-btn-hover-border-color: color-mix(in oklab, var(--brand), black 14%);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: color-mix(in oklab, var(--brand), black 22%);
+    --bs-btn-active-border-color: color-mix(in oklab, var(--brand), black 22%);
+    box-shadow: 0 10px 24px -12px var(--brand);
+  }
+
+  .btn-ghost {
+    --bs-btn-color: var(--heading-color);
+    --bs-btn-bg: var(--surface);
+    --bs-btn-border-color: var(--surface-border);
+    --bs-btn-hover-color: var(--heading-color);
+    --bs-btn-hover-bg: var(--pill-bg);
+    --bs-btn-hover-border-color: var(--pill-border);
+    --bs-btn-active-color: var(--heading-color);
+    --bs-btn-active-bg: var(--pill-bg);
+    --bs-btn-active-border-color: var(--pill-border);
+  }
+
+  .btn-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border-radius: 999px;
+    font-size: 1.15rem;
+  }
+
+  /* Scroll-in animation used by the `appReveal` directive. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s ease var(--reveal-delay, 0ms),
+      transform 0.7s ease var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .text-gradient {
+      background: none;
+      color: CanvasText;
+    }
+  }
+
+  /* "Save as PDF" prints a clean, light, one-column resume. */
+  @media print {
+    :root,
+    [data-bs-theme] {
+      --bs-body-bg: #fff;
+      --bs-body-color: #1e293b;
+      --heading-color: #0f172a;
+      --muted-color: #334155;
+      --brand-text: #1e293b;
+      --surface: #fff;
+      --surface-shadow: none;
+      --surface-border: #e2e8f0;
+    }
+
+    .no-print {
+      display: none !important;
+    }
+
+    .section {
+      padding-block: 1.25rem;
+    }
+
+    .surface {
+      backdrop-filter: none;
+      break-inside: avoid;
+    }
+
+    .text-gradient {
+      background: none;
+      color: #0f172a;
+    }
+
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}

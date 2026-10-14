@@ -1,0 +1,52 @@
+<section class="section" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
+  <div class="container">
+    <app-section-heading [eyebrow]="config().label" [title]="config().title" [headingId]="config().id + '-title'" />
+
+    <ol class="timeline list-unstyled mb-0">
+      @for (job of jobs; track $index) {
+        <li class="timeline-item" appReveal>
+          <span class="timeline-dot" [class.is-current]="!job.end" aria-hidden="true"></span>
+
+          <article class="surface p-4 p-md-5">
+            <header class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+              <div>
+                <h3 class="tw:text-xl tw:md:text-2xl tw:font-semibold mb-1">{{ job.role }}</h3>
+                <p class="tw:text-muted tw:font-medium mb-0">
+                  <i class="bi bi-building me-1" aria-hidden="true"></i>{{ job.company }}
+                </p>
+              </div>
+              <div class="d-flex flex-wrap gap-2">
+                @if (!job.end) {
+                  <span class="pill tw:bg-emerald-500/15 tw:border-emerald-500/30 tw:text-emerald-800 tw:dark:text-emerald-300">
+                    Current
+                  </span>
+                }
+                <span class="pill">
+                  <i class="bi bi-calendar3" aria-hidden="true"></i>
+                  {{ job.start }} – {{ job.end ?? 'Present' }}
+                </span>
+              </div>
+            </header>
+
+            <ul class="achievements list-unstyled mb-4">
+              @for (achievement of job.achievements; track $index) {
+                <li class="d-flex gap-3 mb-3">
+                  <i class="bi bi-check2-circle tw:text-brand-text tw:text-lg tw:leading-snug" aria-hidden="true"></i>
+                  <span>{{ achievement }}</span>
+                </li>
+              }
+            </ul>
+
+            <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0" [attr.aria-label]="'Technologies used at ' + job.company">
+              @for (tech of job.tech; track tech) {
+                <li class="badge rounded-pill tw:bg-brand/10 tw:text-brand-text tw:font-medium tw:px-3 tw:py-2">
+                  {{ tech }}
+                </li>
+              }
+            </ul>
+          </article>
+        </li>
+      }
+    </ol>
+  </div>
+</section>

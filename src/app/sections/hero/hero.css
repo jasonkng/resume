@@ -1,0 +1,85 @@
+.hero {
+  padding-block: clamp(8rem, 16vw, 11rem) clamp(4rem, 9vw, 7rem);
+}
+
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.35;
+}
+
+.blob-1 {
+  width: 32rem;
+  height: 32rem;
+  top: -10rem;
+  left: -8rem;
+  background: var(--brand);
+}
+
+.blob-2 {
+  width: 28rem;
+  height: 28rem;
+  top: 4rem;
+  right: -10rem;
+  background: var(--brand-2);
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 70%);
+}
+
+.code-card-bar {
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+}
+
+.code {
+  color: var(--bs-body-color);
+  overflow-x: auto;
+}
+
+.tk-kw {
+  color: #c026d3;
+}
+
+.tk-var {
+  color: var(--brand-text);
+}
+
+.tk-key {
+  color: #0369a1;
+}
+
+.tk-str {
+  color: #047857;
+}
+
+:host-context([data-bs-theme='dark']) .tk-kw {
+  color: #f0abfc;
+}
+
+:host-context([data-bs-theme='dark']) .tk-key {
+  color: #7dd3fc;
+}
+
+:host-context([data-bs-theme='dark']) .tk-str {
+  color: #6ee7b7;
+}

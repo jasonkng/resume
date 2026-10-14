@@ -1,5 +1,15 @@
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## This Project
+
+A static, frontend-only resume site (no backend) deployed to GitHub Pages by `.github/workflows/deploy.yml` on push to `main`.
+
+- All content lives in `src/app/data/resume.data.ts` (typed by `resume.model.ts`). Components read it via the `RESUME_DATA` token; never hard-code resume text in templates.
+- Tailwind utilities MUST use the `tw:` prefix (`tw:flex`, `tw:md:text-5xl`). Unprefixed class names are Bootstrap's.
+- Global styles in `src/styles.css` use cascade layers (`theme, bootstrap, base, components, utilities`); put new global rules in `base` or `components`, never unlayered.
+- Brand colours are CSS variables (`--brand`, `--brand-2`) in `src/styles.css`; use them (or `tw:text-brand`, `tw:bg-brand/10`) instead of fixed colours.
+- Use Node 24 (`.nvmrc`). Check work with `npx ng build` and `npx ng test --watch=false`.
+
 ## TypeScript Best Practices
 
 - Use strict type checking

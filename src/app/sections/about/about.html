@@ -1,0 +1,34 @@
+<section class="section" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
+  <div class="container">
+    <app-section-heading [eyebrow]="config().label" [title]="config().title" [headingId]="config().id + '-title'" />
+
+    <div class="row g-4">
+      <div class="col-lg-7" appReveal>
+        <div class="surface h-100 p-4 p-md-5">
+          @for (paragraph of resume.summary; track $index; let first = $first) {
+            <p class="tw:text-lg tw:leading-relaxed" [class]="{ 'tw:text-heading': first, 'tw:font-medium': first }">
+              {{ paragraph }}
+            </p>
+          }
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <ul class="row g-4 list-unstyled mb-0 h-100" aria-label="Career highlights">
+          @for (highlight of resume.highlights; track highlight.label; let i = $index) {
+            <li class="col-6 col-lg-12" [appReveal]="i * 90">
+              <div
+                class="surface h-100 p-4 d-flex flex-column flex-lg-row align-items-lg-center gap-1 gap-lg-3 tw:transition tw:duration-300 tw:hover:-translate-y-1"
+              >
+                <p class="text-gradient tw:font-display tw:text-3xl tw:md:text-4xl tw:font-bold tw:whitespace-nowrap tw:lg:w-40 tw:shrink-0 mb-0">
+                  {{ highlight.value }}
+                </p>
+                <p class="tw:text-sm tw:text-muted mb-0">{{ highlight.label }}</p>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

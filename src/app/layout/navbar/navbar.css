@@ -1,0 +1,36 @@
+.skip-link:focus {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1100;
+}
+
+.site-header {
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    backdrop-filter 0.3s ease;
+}
+
+.site-header.is-solid {
+  background-color: color-mix(in srgb, var(--bs-body-bg) 82%, transparent);
+  border-bottom-color: var(--surface-border);
+  backdrop-filter: blur(14px);
+}
+
+.nav-pill {
+  border-radius: 999px;
+  padding-inline: 0.9rem;
+  font-weight: 500;
+  color: var(--muted-color);
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.nav-pill:hover,
+.nav-pill.active {
+  color: var(--heading-color);
+  background-color: var(--pill-bg);
+}
