@@ -1,90 +1,79 @@
 ---
-version: 1
+version: 2
 name: Jason Kng Resume
 description: >
-  A flat, square, single-accent resume site in the spirit of IBM's Carbon Design System:
-  white and light-grey bands, charcoal type, one blue accent, IBM Plex Sans at light weight
-  for very large display type. No gradients, no shadows at rest, no glass, no ornaments.
+  A modern developer-portfolio layout: a sticky sidebar (name, title, section nav, links) beside
+  a scrolling content column. Geist type at sensible sizes, soft rounded cards, pill chips and
+  buttons, subtle borders, one blue accent, light and dark themes.
 
 colors:
-  accent: "#0f62fe"          # the only chromatic colour: primary buttons, links, active nav, contact band
+  accent: "#2563eb"          # primary buttons, links, focus, active chips, filter highlights, contact card tint
   light:
     canvas: "#ffffff"
-    surface-1: "#f4f4f4"     # alternate section bands, chips, scrolled navbar
-    surface-2: "#e0e0e0"     # hover/pressed tone step
-    ink: "#161616"           # all running text
-    ink-muted: "#525252"     # dates, secondary notes
-    highlight: "accent 10% on white"   # filtered achievements
-    code-bg: "#161616"
-    footer-bg: "#161616"
+    surface-1: "#f6f7f9"     # cards, hover rows, soft buttons
+    surface-2: "#eceef2"     # hover/pressed step
+    border: "#e4e7ec"
+    ink: "#0f172a"           # headings and key text
+    ink-muted: "#556070"     # body copy, dates, labels (AA on white)
+    code-bg: "#0f172a"
   dark:
-    canvas: "#161616"
-    surface-1: "#262626"
-    surface-2: "#393939"
-    ink: "#f4f4f4"
-    ink-muted: "#c6c6c6"
-    accent-text: "accent mixed 45% with white"   # links/focus on dark ground (AA contrast)
-    code-bg: "#262626"
-    footer-bg: "#000000"
+    canvas: "#0b0f17"
+    surface-1: "#121826"
+    surface-2: "#1a2232"
+    border: "#1f2937"
+    ink: "#e6e9ef"
+    ink-muted: "#98a2b3"
+    accent-text: "accent mixed 40% with white"
+    code-bg: "#121826"
 
 typography:
-  family: IBM Plex Sans (300, 400, 600); IBM Plex Mono only inside real code
-  hero-name:    { size: "clamp(4.25rem, 19.5vw, 20rem)", weight: 300, leading: 0.9, tracking: -0.05em }
-  section-head: { size: "48 / 72 / 96px", weight: 300, leading: 0.95, tracking: -0.04em }
-  statement:    { size: "24 / 36px", weight: 300, max: "~25 words" }
-  title:        { size: "30–36px", weight: 300 }
-  body-lg:      { size: "18–20px", weight: 400, leading: 1.5 }
-  body:         { size: "16px", weight: 400, leading: 1.5, tracking: 0.16px }
-  small:        { size: "14px", weight: 400 }
+  family: Geist (400, 500, 600); Geist Mono only inside the code window
+  name:          { size: "36px phone / 48px desktop", weight: 600, tracking: tight }
+  section-title: { size: "24px", weight: 600 }
+  statement:     { size: "20–24px", weight: 500 }
+  body:          { size: "15–18px", weight: 400, leading: 1.6 }
+  meta:          { size: "13–14px", weight: 500 }
 
 shapes:
-  radius: 0                  # every button, chip, panel and image
+  card-radius: 16px          # .card-soft, experience rows on hover, code window (contact card 20px)
+  control-radius: pill       # buttons with .btn-pill, chips
 spacing:
-  base: 4px
-  section: "clamp(5rem, 11vw, 9rem)"
-  gutter: "16–32px page margins; Bootstrap g-4 on phones, g-5 from lg"
+  section: "clamp(3.5rem, 7vw, 6rem)"
+  page-padding: "24px phone / 40px tablet / 48px desktop"
 ---
 
 # Design rules
 
-Sources: the IBM (Carbon) DESIGN.md from [awesome-design-md](https://github.com/VoltAgent/awesome-design-md) for palette, type and shapes;
-[taste-skill](https://github.com/Leonxlnx/taste-skill) house rules for composition; [Vercel Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines)
-for code-level UI quality. All MIT licensed.
+## Layout
 
-## Page rhythm
-
-Hero (canvas) → About (band) → Experience (canvas) → Skills (band) → Education (canvas) → Contact (accent field) → Footer (charcoal).
-Neighbouring sections never share a layout:
-
-| Section | Composition |
-| --- | --- |
-| Hero | Name across the full width; title, one supporting sentence and one primary action on the left; the stack as a real `<code>` block on a charcoal field on the right (hidden on phones). |
-| About | One statement paragraph at statement size, one body paragraph, then four large numerals with short labels. No cards. |
-| Experience | Technology filter (the page's one interactive feature), then each employer as a 4/8 split: company and span on the left, roles and achievements on the right. Consecutive roles at one company share a heading. |
-| Skills | A spec sheet: a `<dl>` grid of group name over a comma-separated list in light 24px type. |
-| Education | Two plain text columns. |
-| Contact | The only section that changes the whole field colour: flat accent, white type, white button. |
-| Footer | Charcoal close with the name returning at full width. |
+- **Desktop (≥ 992px):** Bootstrap `col-lg-5` sidebar + `col-lg-7` content inside `container-xl`.
+  The sidebar (`app-sidebar`) is `position: sticky; height: 100vh` and holds the name, title,
+  availability, tagline, Email/Save as PDF buttons, the section nav (line indicator grows on the
+  active section) and the social links + theme toggle at the bottom.
+- **Phones and tablets:** the sidebar renders as the intro at the top; a slim fixed top bar
+  (`app-navbar`) carries the theme toggle and a dropdown menu. Its name fades in after scrolling.
+- Sections in the content column: About (statement, stat cards, code window) → Experience
+  (technology filter, date + content rows) → Skills (group label + pill chips) → Education
+  (date + content rows) → Contact (accent-tinted card) → small footer line.
 
 ## Do
 
-- Use flat colour and tone steps (`canvas` → `surface-1` → `surface-2`) to separate things.
-- Keep running text in full `ink`; use `ink-muted` only for dates and secondary notes.
-- Keep every heading to two lines or fewer at every width (check at 1440, 768 and 390px).
-- Set buttons square (`radius: 0`), Carbon proportions (48px tall, 12 × 16px padding), Title Case labels.
-- Animate only `transform` and `opacity`; stagger section parts by 60–90ms; honour `prefers-reduced-motion`.
-- Use `font-variant-numeric: tabular-nums` (`.tabular`) for dates and figures.
-- Mark technology names and code with `translate="no"`.
+- Keep the name at normal heading size; the content, not the name, carries the page.
+- Use tokens (`var(--surface-1)`, `tw:text-muted`...) for every colour; never hard-code a grey.
+- Use `.card-soft` for tiles, `.chip` for technologies, `.btn-accent` / `.btn-soft` / `.btn-quiet`
+  (add `.btn-pill`) for actions.
+- Keep hover feedback subtle: tone step + border, no jumps in layout.
+- Animate only `transform` and `opacity` (plus colour transitions on hover); honour
+  `prefers-reduced-motion`.
+- Use `.tabular` for dates and figures, `translate="no"` on technology names and code.
+- Keep every heading to two lines or fewer at 1440, 768 and 390px.
 
 ## Don't
 
-- No gradients (backgrounds, buttons or text), no drop shadows on things at rest, no glows, no backdrop blur.
-- No small uppercase labels or pill badges above headings; put the information in the heading or first sentence.
-- No hairline dividers, outlined boxes or grid lines.
-- No icon-topped cards or rows of identical cards.
-- No violet/indigo or a second accent colour.
-- No monospace outside real code.
-- No more than two typefaces (Plex Sans + Plex Mono for code).
+- No oversized display type or full-width name treatments.
+- No gradients, glowing blobs or heavy drop shadows; depth comes from tone steps and borders.
+- No second accent colour.
+- No monospace outside the code window.
 
 ## Verify
 
@@ -93,8 +82,9 @@ npx playwright-cli open http://localhost:4200
 npx playwright-cli set-reduced-motion reduce   # show all content without waiting for scroll animations
 npx playwright-cli resize 1440 900             # then 768 1024 and 390 844
 npx playwright-cli screenshot --full-page --filename=shot.png
+npx playwright-cli set-color-scheme dark       # check dark mode
 npx playwright-cli set-media print             # preview "Save as PDF"
 ```
 
-Check each screenshot for: horizontal overflow, headings over two lines, content that failed to appear,
-and anything on this page that breaks a rule above.
+Check each screenshot for horizontal overflow, content that failed to appear, the sidebar staying
+in place while scrolling on desktop, and anything that breaks a rule above.

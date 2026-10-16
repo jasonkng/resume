@@ -1,0 +1,92 @@
+<header id="top" class="sidebar">
+  <div>
+    @if (profile.avatarUrl) {
+      <img
+        class="d-block mb-4 tw:size-20 tw:rounded-full tw:object-cover"
+        [ngSrc]="profile.avatarUrl"
+        width="80"
+        height="80"
+        priority
+        [alt]="'Photo of ' + profile.name"
+      />
+    }
+
+    <h1 class="tw:text-4xl tw:lg:text-5xl tw:font-semibold tw:tracking-tight tw:text-ink mb-2">{{ profile.name }}</h1>
+    <p class="tw:text-lg tw:lg:text-xl tw:font-medium tw:text-ink mb-3">{{ profile.title }}</p>
+
+    @if (profile.availability || profile.location) {
+      <p class="d-flex flex-wrap align-items-center gap-2 tw:text-sm tw:text-muted mb-4">
+        @if (profile.availability) {
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>{{ profile.availability }}</span>
+        }
+        @if (profile.availability && profile.location) {
+          <span aria-hidden="true">·</span>
+        }
+        @if (profile.location) {
+          <span>{{ profile.location }}</span>
+        }
+      </p>
+    }
+
+    <p class="tw:text-base tw:leading-relaxed tw:text-muted tw:max-w-sm mb-4">{{ profile.tagline }}</p>
+
+    <div class="d-flex flex-wrap gap-2 no-print">
+      @if (profile.email) {
+        <a class="btn btn-accent btn-pill d-inline-flex align-items-center gap-2" [href]="'mailto:' + profile.email">
+          Email Me <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </a>
+      }
+      <button type="button" class="btn btn-soft btn-pill d-inline-flex align-items-center gap-2" (click)="print()">
+        Save as PDF <i class="bi bi-download" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <nav class="side-nav d-none d-lg-block no-print" aria-label="Sections">
+      <ul class="list-unstyled mb-0">
+        @for (section of sections; track section.id) {
+          <li>
+            <a
+              class="side-link"
+              [href]="'#' + section.id"
+              [class.active]="activeId() === section.id"
+              [attr.aria-current]="activeId() === section.id ? 'location' : null"
+            >
+              <span class="side-line" aria-hidden="true"></span>
+              {{ section.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div class="d-flex align-items-center gap-1 tw:mt-8 tw:lg:mt-0 no-print">
+    @for (link of profile.links; track link.url) {
+      <a
+        class="btn btn-icon btn-quiet"
+        [href]="link.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        [attr.aria-label]="link.label + ' (opens in a new tab)'"
+        [attr.title]="link.label"
+      >
+        <i [class]="'bi bi-' + link.icon" aria-hidden="true"></i>
+      </a>
+    }
+    @if (profile.email) {
+      <a class="btn btn-icon btn-quiet" [href]="'mailto:' + profile.email" aria-label="Email" title="Email">
+        <i class="bi bi-envelope" aria-hidden="true"></i>
+      </a>
+    }
+    <button
+      type="button"
+      class="btn btn-icon btn-quiet d-none d-lg-inline-grid ms-auto"
+      [attr.aria-label]="themeLabel()"
+      [attr.title]="themeLabel()"
+      (click)="theme.toggle()"
+    >
+      <i class="bi" [class.bi-sun]="theme.isDark()" [class.bi-moon]="!theme.isDark()" aria-hidden="true"></i>
+    </button>
+  </div>
+</header>

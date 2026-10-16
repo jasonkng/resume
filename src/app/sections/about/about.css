@@ -1,0 +1,63 @@
+.code-window {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--code-bg);
+}
+
+.code-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+}
+
+.code-file {
+  margin-left: 0.5rem;
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.code-body {
+  display: block;
+  padding: 1.25rem 1.5rem 1.5rem;
+  font-family: var(--mono-font);
+  font-size: 0.8125rem;
+  line-height: 1.8;
+  color: #e2e8f0;
+  overflow-x: auto;
+}
+
+.line {
+  display: block;
+}
+
+/* Second-level line that soft-wraps with a hanging indent, like an editor. */
+.code-wrap {
+  padding-left: calc(3rem + 2ch);
+  text-indent: -2ch;
+}
+
+.tk-kw {
+  color: #f472b6;
+}
+
+.tk-var {
+  color: #38bdf8;
+}
+
+.tk-key {
+  color: #93c5fd;
+}
+
+.tk-str {
+  color: #86efac;
+}

@@ -1,35 +1,13 @@
 import { Component, computed, DOCUMENT, inject, input, signal } from '@angular/core';
-import { Experience as Role, SectionConfig } from '../../data/resume.model';
+import { SectionConfig } from '../../data/resume.model';
 import { RESUME_DATA } from '../../data/resume.token';
 import { Reveal } from '../../shared/reveal';
 import { SectionHeading } from '../../shared/section-heading/section-heading';
-
-export interface EmployerGroup {
-  company: string;
-  start: string;
-  end?: string;
-  roles: Role[];
-}
 
 /** True when the achievement text mentions the technology, ignoring case, spaces and hyphens. */
 export function mentions(text: string, tech: string): boolean {
   const normalize = (value: string) => value.toLowerCase().replace(/[\s-]/g, '');
   return normalize(text).includes(normalize(tech));
-}
-
-/** Groups consecutive roles at the same company (newest first) so a promotion reads as one employer. */
-export function groupByCompany(roles: Role[]): EmployerGroup[] {
-  const groups: EmployerGroup[] = [];
-  for (const role of roles) {
-    const last = groups.at(-1);
-    if (last?.company === role.company) {
-      last.roles.push(role);
-      last.start = role.start;
-    } else {
-      groups.push({ company: role.company, start: role.start, end: role.end, roles: [role] });
-    }
-  }
-  return groups;
 }
 
 const SKILL_PARAM = 'skill';
@@ -44,9 +22,7 @@ export class Experience {
   readonly config = input.required<SectionConfig>();
 
   private readonly document = inject(DOCUMENT);
-  private readonly roles = inject(RESUME_DATA).experience;
-
-  protected readonly groups = groupByCompany(this.roles);
+  protected readonly roles = inject(RESUME_DATA).experience;
   protected readonly technologies = [...new Set(this.roles.flatMap((role) => role.tech))];
 
   /** The technology being highlighted; mirrored in `?skill=` so a filtered view can be shared. */

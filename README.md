@@ -1,7 +1,8 @@
 # Jason Kng — Resume Site
 
-A single-page resume built with **Angular 22**, **Bootstrap 5.3** and **Tailwind CSS 4**, designed in the spirit of
-IBM's Carbon Design System (flat, square, one accent colour, IBM Plex Sans). The design rules live in [`DESIGN.md`](DESIGN.md).
+A single-page resume built with **Angular 22**, **Bootstrap 5.3** and **Tailwind CSS 4**: a modern split layout with a
+sticky sidebar (name, title, section nav, links) beside a scrolling content column, set in Geist with soft cards and pill
+chips. The design rules live in [`DESIGN.md`](DESIGN.md).
 It is purely frontend: no backend, no database. Every push to `main` deploys it to GitHub Pages for free.
 
 **Live:** https://jasonkng.github.io/resume/
@@ -40,7 +41,7 @@ skills, jobs and education. Edit it and save; TypeScript will flag a missing or 
 | Show your phone number           | Uncomment `phone`. It is off by default to keep it away from scrapers.   |
 | Add a photo                      | Put e.g. `avatar.jpg` in `public/` and set `avatarUrl: 'avatar.jpg'`.     |
 | Add a link (e.g. X, a blog)      | Add `{ label, url, icon }` to `profile.links`.                           |
-| Change the hero code block       | Edit the `{ label, items }` groups in `profile.featuredStack` (~3 short items each). |
+| Change the code window (About)   | Edit the `{ label, items }` groups in `profile.featuredStack` (~3 short items each). |
 | Hide "Open to new opportunities" | Remove `availability`.                                                   |
 
 Link icons are [Bootstrap Icons](https://icons.getbootstrap.com): use the name without the `bi-` prefix (`'linkedin'`, `'github'`).
@@ -49,18 +50,17 @@ The shape of the data is defined in `src/app/data/resume.model.ts`.
 
 ### 2. Colours and fonts: `src/styles.css`
 
-Change the one accent colour at the top and every button, link, active tab, highlight and the contact band follow
+Change the one accent colour at the top and every button, link, active chip, highlight and the contact card follow
 (dark mode derives a lighter tint automatically):
 
 ```css
 :root {
-  --accent: #0f62fe;
+  --accent: #2563eb;
 }
 ```
 
-Fonts (IBM Plex Sans and IBM Plex Mono) come from Google Fonts in `src/index.html`; swap the `<link>` there and update
-`--sans-font` / `--mono-font`. Read [`DESIGN.md`](DESIGN.md) before restyling: it lists what the design avoids (gradients,
-shadows, pill badges, small uppercase labels) and why.
+Fonts (Geist and Geist Mono) come from Google Fonts in `src/index.html`; swap the `<link>` there and update
+`--sans-font` / `--mono-font`. Read [`DESIGN.md`](DESIGN.md) before restyling.
 
 ### 3. Link previews: `src/index.html`
 

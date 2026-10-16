@@ -1,26 +1,19 @@
-/* The one section that changes the whole field colour: flat accent, white type. */
-.contact {
-  color: #fff;
-  background: var(--accent);
-}
-
-.contact h2 {
-  color: #fff;
+.contact-card {
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in oklab, var(--accent) 20%, transparent);
+  border-radius: 1.25rem;
 }
 
 @media print {
-  .contact {
-    color: #000;
+  .contact-card {
+    padding: 0 !important;
     background: none;
-  }
-
-  .contact h2 {
-    color: #000;
-  }
-
-  .contact .btn {
-    color: #000;
     border: 0;
+  }
+
+  .contact-card .btn {
     padding: 0;
+    border: 0;
+    color: #000;
   }
 }

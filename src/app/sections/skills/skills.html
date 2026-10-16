@@ -1,18 +1,20 @@
-<section class="section band" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
-  <div class="container-wide">
-    <app-section-heading [title]="config().title" [headingId]="config().id + '-title'" />
+<section class="section" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
+  <app-section-heading [title]="config().title" [headingId]="config().id + '-title'" />
 
-    <dl class="skills-sheet mb-0">
-      @for (group of skillGroups; track group.name; let i = $index) {
-        <div [appReveal]="(i % 4) * 70">
-          <dt class="tw:text-base tw:font-semibold tw:text-ink mb-2">{{ group.name }}</dt>
-          <dd class="tw:text-xl tw:md:text-2xl tw:font-light tw:leading-snug tw:text-ink mb-0" translate="no">
-            @for (skill of group.skills; track skill; let last = $last) {
-              <span class="tw:whitespace-nowrap">{{ skill }}</span>@if (!last) {, }
-            }
-          </dd>
+  <div class="d-grid gap-4">
+    @for (group of skillGroups; track group.name; let i = $index) {
+      <div class="row g-2 g-md-4" [appReveal]="(i % 4) * 60">
+        <div class="col-md-3">
+          <h3 class="tw:text-sm tw:font-medium tw:text-muted tw:pt-1 mb-0">{{ group.name }}</h3>
         </div>
-      }
-    </dl>
+        <div class="col-md-9">
+          <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0" translate="no">
+            @for (skill of group.skills; track skill) {
+              <li class="chip tw:text-ink">{{ skill }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    }
   </div>
 </section>

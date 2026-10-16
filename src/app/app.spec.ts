@@ -30,6 +30,6 @@ describe('App', () => {
     const ids = [...(fixture.nativeElement as HTMLElement).querySelectorAll('main section')].map(
       (section) => section.id,
     );
-    expect(ids).toEqual(['top', 'experience', 'skills']);
+    expect(ids).toEqual(['experience', 'skills']);
   });
 });

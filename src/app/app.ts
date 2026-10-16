@@ -1,17 +1,18 @@
-import { Component, inject } from '@angular/core';
+import { afterNextRender, Component, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { ScrollSpy } from './core/scroll-spy';
 import { RESUME_DATA } from './data/resume.token';
 import { Footer } from './layout/footer/footer';
 import { Navbar } from './layout/navbar/navbar';
+import { Sidebar } from './layout/sidebar/sidebar';
 import { About } from './sections/about/about';
 import { Contact } from './sections/contact/contact';
 import { Education } from './sections/education/education';
 import { Experience } from './sections/experience/experience';
-import { Hero } from './sections/hero/hero';
 import { Skills } from './sections/skills/skills';
 
 @Component({
-  imports: [Navbar, Hero, About, Skills, Experience, Education, Contact, Footer],
+  imports: [Navbar, Sidebar, About, Skills, Experience, Education, Contact, Footer],
   selector: 'app-root',
   templateUrl: './app.html',
 })
@@ -23,5 +24,8 @@ export class App {
     const { name, title, tagline } = this.resume.profile;
     inject(Title).setTitle(`${name} — ${title}`);
     inject(Meta).updateTag({ name: 'description', content: tagline });
+
+    const scrollSpy = inject(ScrollSpy);
+    afterNextRender(() => scrollSpy.watch(this.sections.map((section) => section.id)));
   }
 }

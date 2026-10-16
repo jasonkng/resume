@@ -1,28 +1,50 @@
-<section class="section band" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
-  <div class="container-wide">
-    <app-section-heading [title]="config().title" [headingId]="config().id + '-title'" />
+<section class="section" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
+  <app-section-heading [title]="config().title" [headingId]="config().id + '-title'" />
 
-    <div class="row">
-      <div class="col-lg-9 col-xl-8">
-        @for (paragraph of resume.summary; track $index; let first = $first) {
-          @if (first) {
-            <p class="tw:text-2xl tw:md:text-4xl tw:font-light tw:leading-snug tw:text-ink mb-4" appReveal>{{ paragraph }}</p>
-          } @else {
-            <p class="tw:text-lg tw:md:text-xl tw:leading-relaxed tw:text-ink tw:max-w-[44rem] mb-3" appReveal="80">
-              {{ paragraph }}
-            </p>
-          }
-        }
-      </div>
+  @for (paragraph of resume.summary; track $index; let first = $first) {
+    @if (first) {
+      <p class="tw:text-xl tw:md:text-2xl tw:leading-snug tw:font-medium tw:tracking-tight tw:text-ink mb-4" appReveal>
+        {{ paragraph }}
+      </p>
+    } @else {
+      <p class="tw:text-base tw:md:text-lg tw:leading-relaxed tw:text-muted mb-3" appReveal="80">{{ paragraph }}</p>
+    }
+  }
+
+  <ul class="row g-3 list-unstyled tw:mt-10 mb-0" aria-label="Career highlights">
+    @for (highlight of resume.highlights; track highlight.label; let i = $index) {
+      <li class="col-6" [appReveal]="i * 70">
+        <div class="card-soft h-100 tw:p-5">
+          <p class="tabular tw:text-3xl tw:font-semibold tw:tracking-tight tw:text-ink mb-1">{{ highlight.value }}</p>
+          <p class="tw:text-sm tw:text-muted mb-0">{{ highlight.label }}</p>
+        </div>
+      </li>
+    }
+  </ul>
+
+  <div class="code-window tw:mt-6 no-print" appReveal="120" aria-hidden="true">
+    <div class="code-bar">
+      <span class="dot tw:bg-rose-400"></span>
+      <span class="dot tw:bg-amber-400"></span>
+      <span class="dot tw:bg-emerald-400"></span>
+      <span class="code-file">developer.ts</span>
     </div>
-
-    <ul class="row g-4 g-lg-5 list-unstyled mb-0 tw:mt-12 tw:lg:mt-20" aria-label="Career highlights">
-      @for (highlight of resume.highlights; track highlight.label; let i = $index) {
-        <li class="col-6 col-lg-3" [appReveal]="i * 80">
-          <p class="display tabular tw:text-5xl tw:md:text-6xl tw:text-ink mb-2">{{ highlight.value }}</p>
-          <p class="tw:text-base tw:text-muted tw:max-w-[16rem] mb-0">{{ highlight.label }}</p>
-        </li>
+    <code class="code-body" translate="no">
+      <span class="line"><span class="tk-kw">const</span>&nbsp;<span class="tk-var">developer</span> = &#123;</span>
+      <span class="line ps-4"><span class="tk-key">name</span>: <span class="tk-str">'{{ resume.profile.name }}'</span>,</span>
+      <span class="line ps-4"><span class="tk-key">role</span>: <span class="tk-str">'{{ resume.profile.title }}'</span>,</span>
+      @if (resume.profile.location) {
+        <span class="line ps-4"><span class="tk-key">location</span>: <span class="tk-str">'{{ resume.profile.location }}'</span>,</span>
       }
-    </ul>
+      <span class="line ps-4"><span class="tk-key">stack</span>: &#123;</span>
+      @for (group of resume.profile.featuredStack; track group.label) {
+        <span class="line code-wrap">
+          <span class="tk-key">{{ group.label }}</span>: [@for (item of group.items; track item; let last = $last) {<span class="tk-str tw:whitespace-nowrap">'{{ item }}'</span>@if (!last) {, }}],
+        </span>
+      }
+      <span class="line ps-4">&#125;,</span>
+      <span class="line ps-4"><span class="tk-key">openToWork</span>: <span class="tk-kw">{{ !!resume.profile.availability }}</span>,</span>
+      <span class="line">&#125;;</span>
+    </code>
   </div>
 </section>

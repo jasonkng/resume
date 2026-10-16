@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RESUME } from '../../data/resume.data';
-import { Experience, groupByCompany, mentions } from './experience';
+import { Experience, mentions } from './experience';
 
 describe('Experience', () => {
   let fixture: ComponentFixture<Experience>;
@@ -24,9 +24,9 @@ describe('Experience', () => {
     expect(section?.getAttribute('aria-labelledby')).toBe('experience-title');
   });
 
-  it('should group consecutive roles at the same company', () => {
-    const companies = [...element.querySelectorAll('article h3')].map((heading) => heading.textContent?.trim());
-    expect(companies).toEqual(groupByCompany(RESUME.experience).map((group) => group.company));
+  it('should list every role, newest first', () => {
+    const roles = [...element.querySelectorAll('.entry h3')].map((heading) => heading.textContent?.trim());
+    expect(roles).toEqual(RESUME.experience.map((role) => role.role));
   });
 
   it('should highlight the achievements that mention the picked technology, and share it in the URL', async () => {

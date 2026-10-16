@@ -1,43 +1,36 @@
-<a class="skip-link visually-hidden-focusable btn btn-accent" href="#main">Skip to Main Content</a>
+<a class="skip-link visually-hidden-focusable btn btn-accent btn-pill" href="#main">Skip to Main Content</a>
 
-<header class="site-header fixed-top no-print" [class.is-scrolled]="scrolled()">
-  <nav class="navbar navbar-expand-lg p-0" aria-label="Primary">
-    <div class="container-wide d-flex flex-wrap align-items-center tw:min-h-16">
-      <a class="wordmark me-auto" href="#top" (click)="closeMenu()">{{ profile.name }}</a>
+<div class="topbar fixed-top d-lg-none no-print" [class.is-solid]="scrolled() || menuOpen()">
+  <nav class="navbar p-0" aria-label="Primary">
+    <div class="container-fluid tw:px-4 tw:sm:px-6 d-flex flex-wrap align-items-center tw:min-h-14">
+      <a class="topbar-name me-auto" href="#top" (click)="closeMenu()">{{ profile.name }}</a>
 
-      <div class="d-flex align-items-center order-lg-last ms-lg-2">
-        <button
-          type="button"
-          class="btn btn-quiet btn-icon"
-          [attr.aria-label]="themeLabel()"
-          [attr.title]="themeLabel()"
-          (click)="theme.toggle()"
-        >
-          <i class="bi" [class.bi-sun]="theme.isDark()" [class.bi-moon]="!theme.isDark()" aria-hidden="true"></i>
-        </button>
-        @if (profile.email) {
-          <a class="btn btn-accent d-none d-sm-inline-flex align-items-center ms-2" [href]="'mailto:' + profile.email">
-            Email Me
-          </a>
-        }
-        <button
-          type="button"
-          class="btn btn-quiet btn-icon d-lg-none ms-1"
-          aria-controls="primary-nav"
-          [attr.aria-expanded]="menuOpen()"
-          aria-label="Toggle navigation"
-          (click)="toggleMenu()"
-        >
-          <i class="bi" [class.bi-x-lg]="menuOpen()" [class.bi-list]="!menuOpen()" aria-hidden="true"></i>
-        </button>
-      </div>
+      <button
+        type="button"
+        class="btn btn-icon btn-quiet"
+        [attr.aria-label]="themeLabel()"
+        [attr.title]="themeLabel()"
+        (click)="theme.toggle()"
+      >
+        <i class="bi" [class.bi-sun]="theme.isDark()" [class.bi-moon]="!theme.isDark()" aria-hidden="true"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-icon btn-quiet"
+        aria-controls="mobile-nav"
+        [attr.aria-expanded]="menuOpen()"
+        aria-label="Toggle navigation"
+        (click)="toggleMenu()"
+      >
+        <i class="bi" [class.bi-x-lg]="menuOpen()" [class.bi-list]="!menuOpen()" aria-hidden="true"></i>
+      </button>
 
-      <div id="primary-nav" class="collapse navbar-collapse flex-grow-0" [class.show]="menuOpen()">
-        <ul class="navbar-nav tw:pb-4 tw:lg:pb-0">
+      <div id="mobile-nav" class="collapse w-100" [class.show]="menuOpen()">
+        <ul class="list-unstyled tw:pb-3 mb-0">
           @for (section of sections; track section.id) {
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link nav-tab"
+                class="topbar-link"
                 [href]="'#' + section.id"
                 [class.active]="activeId() === section.id"
                 [attr.aria-current]="activeId() === section.id ? 'location' : null"
@@ -51,4 +44,4 @@
       </div>
     </div>
   </nav>
-</header>
+</div>

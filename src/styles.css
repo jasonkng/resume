@@ -1,9 +1,9 @@
 /*
- * Design system: see DESIGN.md (Carbon-inspired, flat and square, one accent, IBM Plex Sans).
+ * Design system: see DESIGN.md (split layout, Geist, soft cards, one accent colour).
  *
  * Bootstrap + Tailwind, without the fights:
- * - Bootstrap provides the grid, navbar collapse and a few utilities (plain class names: `row`, `col-lg-6`).
- * - Tailwind provides utilities, always with the `tw:` prefix (`tw:flex`, `tw:md:text-7xl`).
+ * - Bootstrap provides the grid, navbar collapse and the base `.btn` (plain class names: `row`, `col-lg-7`).
+ * - Tailwind provides utilities, always with the `tw:` prefix (`tw:flex`, `tw:lg:text-5xl`).
  * - Cascade layers put Tailwind utilities last, so a `tw:` class always beats Bootstrap.
  * - Tailwind's preflight is skipped; Bootstrap's reboot is the only CSS reset.
  */
@@ -11,9 +11,12 @@
 
 @import 'bootstrap/dist/css/bootstrap.min.css' layer(bootstrap);
 
+@import 'tailwindcss/theme.css' layer(theme) prefix(tw);
+@import 'tailwindcss/utilities.css' layer(utilities) prefix(tw);
+
 /*
  * `!important` reverses layer order: an earlier layer's `!important` beats a later one's.
- * Bootstrap's display utilities (`d-flex`, `d-md-block`) are `!important`, so the print-hide rule
+ * Bootstrap's display utilities (`d-flex`, `d-lg-block`) are `!important`, so the print-hide rule
  * lives in this layer, declared before Bootstrap, to win over them.
  */
 @layer overrides {
@@ -23,26 +26,23 @@
     }
   }
 }
-@import 'tailwindcss/theme.css' layer(theme) prefix(tw);
-@import 'tailwindcss/utilities.css' layer(utilities) prefix(tw);
 
 /* `tw:dark:` follows the site's theme toggle (Bootstrap's `data-bs-theme` attribute). */
 @custom-variant dark (&:where([data-bs-theme='dark'], [data-bs-theme='dark'] *));
 
 /* =========================================================================
- * THEME — the only accent colour and the typefaces. Change these to rebrand.
+ * THEME — the accent colour and the typefaces. Change these to rebrand.
  * ========================================================================= */
 :root {
-  --accent: #0f62fe;
-  --sans-font: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
-  --mono-font: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --accent: #2563eb;
+  --sans-font: 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono-font: 'Geist Mono', ui-monospace, Menlo, monospace;
 }
 
-/* Theme tokens as Tailwind utilities: `tw:text-ink`, `tw:bg-surface`, `tw:text-accent-text`... */
+/* Theme tokens as Tailwind utilities: `tw:text-ink`, `tw:text-muted`, `tw:bg-surface`, `tw:text-accent-text`... */
 @theme inline {
   --color-canvas: var(--canvas);
   --color-surface: var(--surface-1);
-  --color-surface-2: var(--surface-2);
   --color-ink: var(--ink);
   --color-muted: var(--ink-muted);
   --color-accent: var(--accent);
@@ -52,20 +52,19 @@
 }
 
 @layer base {
-  /* Light theme (Carbon "White"). */
   :root,
   [data-bs-theme='light'] {
     --canvas: #ffffff;
-    --surface-1: #f4f4f4;
-    --surface-2: #e0e0e0;
-    --ink: #161616;
-    --ink-muted: #525252;
+    --surface-1: #f6f7f9;
+    --surface-2: #eceef2;
+    --border: #e4e7ec;
+    --ink: #0f172a;
+    --ink-muted: #556070;
     --accent-text: var(--accent);
     --accent-hover: color-mix(in oklab, var(--accent), black 12%);
-    --accent-active: color-mix(in oklab, var(--accent), black 35%);
+    --accent-soft: color-mix(in oklab, var(--accent) 9%, white);
     --highlight: color-mix(in oklab, var(--accent) 10%, white);
-    --code-bg: #161616;
-    --footer-bg: #161616;
+    --code-bg: #0f172a;
 
     --bs-body-font-family: var(--sans-font);
     --bs-body-bg: var(--canvas);
@@ -73,31 +72,30 @@
     --bs-emphasis-color: var(--ink);
     --bs-heading-color: var(--ink);
     --bs-secondary-color: var(--ink-muted);
-    --bs-border-color: var(--surface-2);
+    --bs-border-color: var(--border);
     color-scheme: light;
   }
 
-  /* Dark theme (Carbon "Gray 100"). */
   [data-bs-theme='dark'] {
-    --canvas: #161616;
-    --surface-1: #262626;
-    --surface-2: #393939;
-    --ink: #f4f4f4;
-    --ink-muted: #c6c6c6;
-    --accent-text: color-mix(in oklab, var(--accent), white 45%);
-    --highlight: color-mix(in oklab, var(--accent) 28%, #161616);
-    --code-bg: #262626;
-    --footer-bg: #000000;
+    --canvas: #0b0f17;
+    --surface-1: #121826;
+    --surface-2: #1a2232;
+    --border: #1f2937;
+    --ink: #e6e9ef;
+    --ink-muted: #98a2b3;
+    --accent-text: color-mix(in oklab, var(--accent), white 40%);
+    --accent-soft: color-mix(in oklab, var(--accent) 16%, #0b0f17);
+    --highlight: color-mix(in oklab, var(--accent) 22%, #0b0f17);
+    --code-bg: #121826;
     color-scheme: dark;
   }
 
   html {
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 4.5rem;
   }
 
   body {
-    letter-spacing: 0.16px;
-    line-height: 1.5;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -105,7 +103,6 @@
   h2,
   h3,
   h4 {
-    font-weight: 300;
     letter-spacing: -0.02em;
     text-wrap: balance;
   }
@@ -142,40 +139,34 @@
 }
 
 @layer components {
-  .container-wide {
-    width: 100%;
-    max-width: 1440px;
-    margin-inline: auto;
-    padding-inline: clamp(1rem, 3vw, 2rem);
-  }
-
   .section {
-    padding-block: clamp(5rem, 11vw, 9rem);
+    padding-block: clamp(3.5rem, 7vw, 6rem);
   }
 
-  .band {
-    background: var(--surface-1);
-  }
-
-  .display {
-    font-weight: 300;
-    letter-spacing: -0.04em;
-    line-height: 0.95;
+  .section-title {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
   }
 
   .tabular {
     font-variant-numeric: tabular-nums;
   }
 
-  /* Buttons: flat, square, Carbon proportions. Built on Bootstrap's `.btn`. */
+  /* A soft surface: rounded, hairline border, tone-step background. */
+  .card-soft {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+  }
+
+  /* Buttons, built on Bootstrap's `.btn`. */
   .btn {
-    --bs-btn-border-radius: 0;
-    --bs-btn-padding-x: 1rem;
-    --bs-btn-padding-y: 0.75rem;
+    --bs-btn-padding-x: 1.125rem;
+    --bs-btn-padding-y: 0.625rem;
     --bs-btn-font-size: 0.9375rem;
-    --bs-btn-font-weight: 400;
-    min-height: 3rem;
-    letter-spacing: 0.16px;
+    --bs-btn-font-weight: 500;
+    --bs-btn-border-radius: 0.75rem;
     transition:
       background-color 0.15s ease,
       color 0.15s ease,
@@ -184,7 +175,11 @@
   }
 
   .btn:active {
-    transform: translateY(1px);
+    transform: scale(0.98);
+  }
+
+  .btn-pill {
+    --bs-btn-border-radius: 999px;
   }
 
   .btn-accent {
@@ -195,24 +190,24 @@
     --bs-btn-hover-bg: var(--accent-hover);
     --bs-btn-hover-border-color: var(--accent-hover);
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: var(--accent-active);
-    --bs-btn-active-border-color: var(--accent-active);
+    --bs-btn-active-bg: var(--accent-hover);
+    --bs-btn-active-border-color: var(--accent-hover);
   }
 
-  .btn-tertiary {
-    --bs-btn-color: var(--accent-text);
-    --bs-btn-bg: transparent;
-    --bs-btn-border-color: var(--accent-text);
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: var(--accent);
-    --bs-btn-hover-border-color: var(--accent);
-    --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: var(--accent-active);
-    --bs-btn-active-border-color: var(--accent-active);
+  .btn-soft {
+    --bs-btn-color: var(--ink);
+    --bs-btn-bg: var(--surface-1);
+    --bs-btn-border-color: var(--border);
+    --bs-btn-hover-color: var(--ink);
+    --bs-btn-hover-bg: var(--surface-2);
+    --bs-btn-hover-border-color: var(--border);
+    --bs-btn-active-color: var(--ink);
+    --bs-btn-active-bg: var(--surface-2);
+    --bs-btn-active-border-color: var(--border);
   }
 
   .btn-quiet {
-    --bs-btn-color: var(--ink);
+    --bs-btn-color: var(--ink-muted);
     --bs-btn-bg: transparent;
     --bs-btn-border-color: transparent;
     --bs-btn-hover-color: var(--ink);
@@ -223,46 +218,32 @@
     --bs-btn-active-border-color: transparent;
   }
 
-  /* White button for use on the accent-coloured contact band. */
-  .btn-on-accent {
-    --bs-btn-color: var(--accent);
-    --bs-btn-bg: #fff;
-    --bs-btn-border-color: #fff;
-    --bs-btn-hover-color: var(--accent-active);
-    --bs-btn-hover-bg: #e8efff;
-    --bs-btn-hover-border-color: #e8efff;
-    --bs-btn-active-color: var(--accent-active);
-    --bs-btn-active-bg: #d0e2ff;
-    --bs-btn-active-border-color: #d0e2ff;
-  }
-
   .btn-icon {
     display: inline-grid;
     place-items: center;
-    width: 3rem;
+    width: 2.75rem;
+    height: 2.75rem;
     padding: 0;
     font-size: 1.15rem;
   }
 
-  /* Technology chip: a square tag on a tone step, no outline. */
+  /* Technology chip: a small pill. As a button it toggles the experience filter. */
   .chip {
     display: inline-flex;
     align-items: center;
-    min-height: 2rem;
-    padding: 0.25rem 0.75rem;
-    border: 0;
-    border-radius: 0;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
     font: inherit;
-    font-size: 0.875rem;
-    color: var(--ink);
-    background: var(--surface-1);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--ink-muted);
+    background: var(--canvas);
     transition:
       background-color 0.15s ease,
-      color 0.15s ease;
-  }
-
-  .band .chip {
-    background: var(--canvas);
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
 
   button.chip {
@@ -270,21 +251,24 @@
   }
 
   button.chip:hover {
-    background: var(--surface-2);
+    color: var(--ink);
+    border-color: var(--ink-muted);
   }
 
-  button.chip[aria-pressed='true'] {
-    color: #fff;
-    background: var(--accent);
+  button.chip[aria-pressed='true'],
+  .chip.is-selected {
+    color: var(--accent-text);
+    background: var(--accent-soft);
+    border-color: color-mix(in oklab, var(--accent) 45%, transparent);
   }
 
   /* Scroll-in animation used by the `appReveal` directive. Transform and opacity only. */
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(16px);
     transition:
-      opacity 0.6s cubic-bezier(0.2, 0, 0.38, 0.9) var(--reveal-delay, 0ms),
-      transform 0.6s cubic-bezier(0.2, 0, 0.38, 0.9) var(--reveal-delay, 0ms);
+      opacity 0.6s cubic-bezier(0.2, 0, 0.2, 1) var(--reveal-delay, 0ms),
+      transform 0.6s cubic-bezier(0.2, 0, 0.2, 1) var(--reveal-delay, 0ms);
   }
 
   .reveal.is-visible {
@@ -311,6 +295,7 @@
     [data-bs-theme] {
       --canvas: #fff;
       --surface-1: #fff;
+      --border: #ddd;
       --ink: #000;
       --ink-muted: #333;
       --accent-text: #000;
@@ -319,10 +304,6 @@
 
     .section {
       padding-block: 1rem;
-    }
-
-    .display {
-      font-size: 2.5rem !important;
     }
 
     .reveal {

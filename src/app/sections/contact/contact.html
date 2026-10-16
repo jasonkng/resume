@@ -1,21 +1,21 @@
-<section class="contact section" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
-  <div class="container-wide">
-    <h2 [id]="config().id + '-title'" class="display tw:text-4xl tw:md:text-6xl tw:xl:text-7xl tw:max-w-[18ch] mb-4" appReveal>
+<section class="section" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
+  <div class="contact-card tw:p-6 tw:md:p-10" appReveal>
+    <h2 [id]="config().id + '-title'" class="tw:text-2xl tw:md:text-3xl tw:font-semibold tw:tracking-tight tw:text-ink mb-3">
       {{ contact.heading }}
     </h2>
-    <p class="tw:text-lg tw:md:text-xl tw:max-w-[40rem] mb-5" appReveal="80">{{ contact.message }}</p>
+    <p class="tw:text-base tw:md:text-lg tw:text-muted tw:max-w-xl mb-4">{{ contact.message }}</p>
 
-    <div class="d-flex flex-wrap gap-2" appReveal="160">
+    <div class="d-flex flex-wrap gap-2">
       @if (profile.email) {
-        <a class="btn btn-on-accent d-inline-flex align-items-center gap-3" [href]="'mailto:' + profile.email">
-          {{ profile.email }} <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        <a class="btn btn-accent btn-pill d-inline-flex align-items-center gap-2" [href]="'mailto:' + profile.email">
+          <i class="bi bi-envelope" aria-hidden="true"></i>{{ profile.email }}
         </a>
       }
       @if (profile.phone) {
-        <a class="btn btn-outline-light" [href]="'tel:' + profile.phone">{{ profile.phone }}</a>
+        <a class="btn btn-soft btn-pill" [href]="'tel:' + profile.phone">{{ profile.phone }}</a>
       }
       @for (link of profile.links; track link.url) {
-        <a class="btn btn-outline-light d-inline-flex align-items-center gap-2" [href]="link.url" target="_blank" rel="noopener noreferrer">
+        <a class="btn btn-soft btn-pill d-inline-flex align-items-center gap-2" [href]="link.url" target="_blank" rel="noopener noreferrer">
           <i [class]="'bi bi-' + link.icon" aria-hidden="true"></i>{{ link.label }}
           <span class="visually-hidden">(opens in a new tab)</span>
         </a>

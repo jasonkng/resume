@@ -7,6 +7,7 @@ import { SectionHeading } from '../../shared/section-heading/section-heading';
 @Component({
   imports: [Reveal, SectionHeading],
   selector: 'app-about',
+  styleUrl: './about.css',
   templateUrl: './about.html',
 })
 export class About {

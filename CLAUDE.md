@@ -6,7 +6,7 @@ A static, frontend-only resume site (no backend) deployed to GitHub Pages by `.g
 
 - All content lives in `src/app/data/resume.data.ts` (typed by `resume.model.ts`). Components read it via the `RESUME_DATA` token; never hard-code resume text in templates.
 - Tailwind utilities MUST use the `tw:` prefix (`tw:flex`, `tw:md:text-5xl`). Unprefixed class names are Bootstrap's.
-- Follow `DESIGN.md` for every visual change: flat and square, one accent (`--accent`), IBM Plex Sans, tone steps instead of lines or shadows. No gradients, shadows at rest, glass, pill badges, small uppercase labels, icon-topped cards or violet/indigo.
+- Follow `DESIGN.md` for every visual change: sticky-sidebar split layout, Geist, soft rounded cards (`.card-soft`), pill chips/buttons, one accent (`--accent`). No oversized display type, gradients, glowing blobs or heavy shadows.
 - Global styles in `src/styles.css` use cascade layers (`theme, overrides, bootstrap, base, components, utilities`); put new global rules in `base` or `components`, never unlayered. Only `!important` print overrides go in `overrides`.
 - Use theme tokens (`var(--ink)`, `var(--surface-1)`, or `tw:text-ink`, `tw:bg-surface`, `tw:text-accent-text`) instead of fixed colours.
 - Use Node 24 (`.nvmrc`). Check work with `npx ng build` and `npx ng test --watch=false`, then look at it with `npx playwright-cli` at 1440, 768 and 390px wide (see `DESIGN.md` → Verify).

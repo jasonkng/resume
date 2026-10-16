@@ -1,28 +1,34 @@
 <app-navbar />
 
-<main id="main" tabindex="-1">
-  <app-hero />
+<div class="container-xl tw:px-6 tw:md:px-10 tw:lg:px-12">
+  <div class="row gx-lg-5">
+    <div class="col-lg-5">
+      <app-sidebar />
+    </div>
 
-  <!-- Sections render in the order (and with the visibility) set in resume.data.ts. -->
-  @for (section of sections; track section.id) {
-    @switch (section.id) {
-      @case ('about') {
-        <app-about [config]="section" />
+    <main id="main" class="col-lg-7 tw:lg:pt-16" tabindex="-1">
+      <!-- Sections render in the order (and with the visibility) set in resume.data.ts. -->
+      @for (section of sections; track section.id) {
+        @switch (section.id) {
+          @case ('about') {
+            <app-about [config]="section" />
+          }
+          @case ('skills') {
+            <app-skills [config]="section" />
+          }
+          @case ('experience') {
+            <app-experience [config]="section" />
+          }
+          @case ('education') {
+            <app-education [config]="section" />
+          }
+          @case ('contact') {
+            <app-contact [config]="section" />
+          }
+        }
       }
-      @case ('skills') {
-        <app-skills [config]="section" />
-      }
-      @case ('experience') {
-        <app-experience [config]="section" />
-      }
-      @case ('education') {
-        <app-education [config]="section" />
-      }
-      @case ('contact') {
-        <app-contact [config]="section" />
-      }
-    }
-  }
-</main>
 
-<app-footer />
+      <app-footer />
+    </main>
+  </div>
+</div>
