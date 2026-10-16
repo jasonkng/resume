@@ -1,86 +1,93 @@
 /*
- * Bootstrap + Tailwind, without the fights.
+ * Design system: see DESIGN.md (Carbon-inspired, flat and square, one accent, IBM Plex Sans).
  *
- * - Bootstrap provides the grid, navbar and components (plain class names: `row`, `btn`, `badge`).
- * - Tailwind provides utilities, always written with the `tw:` prefix (`tw:flex`, `tw:md:text-7xl`)
- *   so class names never collide with Bootstrap's (`container`, `collapse`, `p-3`...).
+ * Bootstrap + Tailwind, without the fights:
+ * - Bootstrap provides the grid, navbar collapse and a few utilities (plain class names: `row`, `col-lg-6`).
+ * - Tailwind provides utilities, always with the `tw:` prefix (`tw:flex`, `tw:md:text-7xl`).
  * - Cascade layers put Tailwind utilities last, so a `tw:` class always beats Bootstrap.
  * - Tailwind's preflight is skipped; Bootstrap's reboot is the only CSS reset.
  */
-@layer theme, bootstrap, base, components, utilities;
+@layer theme, overrides, bootstrap, base, components, utilities;
 
 @import 'bootstrap/dist/css/bootstrap.min.css' layer(bootstrap);
+
+/*
+ * `!important` reverses layer order: an earlier layer's `!important` beats a later one's.
+ * Bootstrap's display utilities (`d-flex`, `d-md-block`) are `!important`, so the print-hide rule
+ * lives in this layer, declared before Bootstrap, to win over them.
+ */
+@layer overrides {
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  }
+}
 @import 'tailwindcss/theme.css' layer(theme) prefix(tw);
 @import 'tailwindcss/utilities.css' layer(utilities) prefix(tw);
 
-/* `tw:dark:` follows Bootstrap's theme attribute, so one toggle drives both frameworks. */
+/* `tw:dark:` follows the site's theme toggle (Bootstrap's `data-bs-theme` attribute). */
 @custom-variant dark (&:where([data-bs-theme='dark'], [data-bs-theme='dark'] *));
 
 /* =========================================================================
- * THEME — change these to rebrand the whole site.
+ * THEME — the only accent colour and the typefaces. Change these to rebrand.
  * ========================================================================= */
 :root {
-  --brand: #4f46e5;
-  --brand-2: #0891b2;
-  --sans-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --display-font: 'Space Grotesk', var(--sans-font);
+  --accent: #0f62fe;
+  --sans-font: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --mono-font: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
 }
 
-/* Expose the theme to Tailwind as `tw:text-brand`, `tw:bg-brand/10`, `tw:font-display`... */
+/* Theme tokens as Tailwind utilities: `tw:text-ink`, `tw:bg-surface`, `tw:text-accent-text`... */
 @theme inline {
-  --color-brand: var(--brand);
-  --color-brand-2: var(--brand-2);
-  --color-brand-text: var(--brand-text);
-  --color-heading: var(--heading-color);
-  --color-muted: var(--muted-color);
-  --font-display: var(--display-font);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --font-sans: var(--sans-font);
+  --font-mono: var(--mono-font);
 }
 
 @layer base {
+  /* Light theme (Carbon "White"). */
   :root,
   [data-bs-theme='light'] {
-    --bs-body-font-family: var(--sans-font);
-    --bs-body-bg: #f8fafc;
-    --bs-body-color: #334155;
-    --bs-emphasis-color: #0f172a;
-    --bs-heading-color: #0f172a;
-    --bs-secondary-color: #475569;
-    --bs-border-color: #e2e8f0;
+    --canvas: #ffffff;
+    --surface-1: #f4f4f4;
+    --surface-2: #e0e0e0;
+    --ink: #161616;
+    --ink-muted: #525252;
+    --accent-text: var(--accent);
+    --accent-hover: color-mix(in oklab, var(--accent), black 12%);
+    --accent-active: color-mix(in oklab, var(--accent), black 35%);
+    --highlight: color-mix(in oklab, var(--accent) 10%, white);
+    --code-bg: #161616;
+    --footer-bg: #161616;
 
-    --brand-text: var(--brand);
-    --heading-color: #0f172a;
-    --muted-color: #475569;
-    --grad-from: var(--brand);
-    --grad-to: var(--brand-2);
-    --surface: rgb(255 255 255 / 0.78);
-    --surface-border: rgb(15 23 42 / 0.08);
-    --surface-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 18px 40px -20px rgb(15 23 42 / 0.18);
-    --pill-bg: color-mix(in oklab, var(--brand) 9%, transparent);
-    --pill-border: color-mix(in oklab, var(--brand) 18%, transparent);
-    --grid-line: rgb(15 23 42 / 0.06);
+    --bs-body-font-family: var(--sans-font);
+    --bs-body-bg: var(--canvas);
+    --bs-body-color: var(--ink);
+    --bs-emphasis-color: var(--ink);
+    --bs-heading-color: var(--ink);
+    --bs-secondary-color: var(--ink-muted);
+    --bs-border-color: var(--surface-2);
     color-scheme: light;
   }
 
+  /* Dark theme (Carbon "Gray 100"). */
   [data-bs-theme='dark'] {
-    --bs-body-bg: #0b1120;
-    --bs-body-color: #cbd5e1;
-    --bs-emphasis-color: #f8fafc;
-    --bs-heading-color: #f8fafc;
-    --bs-secondary-color: #94a3b8;
-    --bs-border-color: rgb(255 255 255 / 0.1);
-
-    /* Lighter brand tints keep text above WCAG AA contrast on the dark background. */
-    --brand-text: color-mix(in oklab, var(--brand), white 50%);
-    --heading-color: #f8fafc;
-    --muted-color: #94a3b8;
-    --grad-from: color-mix(in oklab, var(--brand), white 40%);
-    --grad-to: color-mix(in oklab, var(--brand-2), white 30%);
-    --surface: rgb(15 23 42 / 0.62);
-    --surface-border: rgb(255 255 255 / 0.08);
-    --surface-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 18px 40px -20px rgb(0 0 0 / 0.6);
-    --pill-bg: color-mix(in oklab, var(--brand) 22%, transparent);
-    --pill-border: color-mix(in oklab, var(--brand) 40%, transparent);
-    --grid-line: rgb(255 255 255 / 0.04);
+    --canvas: #161616;
+    --surface-1: #262626;
+    --surface-2: #393939;
+    --ink: #f4f4f4;
+    --ink-muted: #c6c6c6;
+    --accent-text: color-mix(in oklab, var(--accent), white 45%);
+    --highlight: color-mix(in oklab, var(--accent) 28%, #161616);
+    --code-bg: #262626;
+    --footer-bg: #000000;
     color-scheme: dark;
   }
 
@@ -89,139 +96,195 @@
   }
 
   body {
+    letter-spacing: 0.16px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    font-family: var(--display-font);
+    font-weight: 300;
     letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
-  /* Only class-less links get the brand colour, so buttons and nav links keep their own. */
+  p {
+    text-wrap: pretty;
+  }
+
+  a,
+  button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Only class-less links get the accent colour, so buttons and nav links keep their own. */
   a:not([class]) {
-    color: var(--brand-text);
+    color: var(--accent-text);
+    text-underline-offset: 0.2em;
   }
 
   :focus-visible {
-    outline: 2px solid var(--brand-text);
-    outline-offset: 3px;
+    outline: 2px solid var(--accent-text);
+    outline-offset: 2px;
   }
 
   main:focus {
     outline: none;
   }
+
+  ::selection {
+    background: var(--accent);
+    color: #fff;
+  }
 }
 
 @layer components {
+  .container-wide {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 3vw, 2rem);
+  }
+
   .section {
-    padding-block: clamp(4rem, 9vw, 7rem);
+    padding-block: clamp(5rem, 11vw, 9rem);
   }
 
-  .eyebrow {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--brand-text);
+  .band {
+    background: var(--surface-1);
   }
 
-  .text-gradient {
-    background: linear-gradient(100deg, var(--grad-from), var(--grad-to));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .display {
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
   }
 
-  .surface {
-    background: var(--surface);
-    border: 1px solid var(--surface-border);
-    border-radius: 1.25rem;
-    box-shadow: var(--surface-shadow);
-    backdrop-filter: blur(12px);
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.35rem 0.8rem;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--heading-color);
-    background: var(--pill-bg);
-    border: 1px solid var(--pill-border);
+  /* Buttons: flat, square, Carbon proportions. Built on Bootstrap's `.btn`. */
+  .btn {
+    --bs-btn-border-radius: 0;
+    --bs-btn-padding-x: 1rem;
+    --bs-btn-padding-y: 0.75rem;
+    --bs-btn-font-size: 0.9375rem;
+    --bs-btn-font-weight: 400;
+    min-height: 3rem;
+    letter-spacing: 0.16px;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.15s ease;
   }
 
-  .monogram {
-    display: inline-grid;
-    place-items: center;
-    flex-shrink: 0;
-    border-radius: 0.75rem;
-    font-family: var(--display-font);
-    font-weight: 700;
-    color: #fff;
-    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  .btn:active {
+    transform: translateY(1px);
   }
 
-  .icon-tile {
-    display: inline-grid;
-    place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 0.85rem;
-    font-size: 1.25rem;
-    color: var(--brand-text);
-    background: var(--pill-bg);
-  }
-
-  /* Bootstrap button variants driven by the brand colour. */
-  .btn-brand {
+  .btn-accent {
     --bs-btn-color: #fff;
-    --bs-btn-bg: var(--brand);
-    --bs-btn-border-color: var(--brand);
+    --bs-btn-bg: var(--accent);
+    --bs-btn-border-color: var(--accent);
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: color-mix(in oklab, var(--brand), black 14%);
-    --bs-btn-hover-border-color: color-mix(in oklab, var(--brand), black 14%);
+    --bs-btn-hover-bg: var(--accent-hover);
+    --bs-btn-hover-border-color: var(--accent-hover);
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: color-mix(in oklab, var(--brand), black 22%);
-    --bs-btn-active-border-color: color-mix(in oklab, var(--brand), black 22%);
-    box-shadow: 0 10px 24px -12px var(--brand);
+    --bs-btn-active-bg: var(--accent-active);
+    --bs-btn-active-border-color: var(--accent-active);
   }
 
-  .btn-ghost {
-    --bs-btn-color: var(--heading-color);
-    --bs-btn-bg: var(--surface);
-    --bs-btn-border-color: var(--surface-border);
-    --bs-btn-hover-color: var(--heading-color);
-    --bs-btn-hover-bg: var(--pill-bg);
-    --bs-btn-hover-border-color: var(--pill-border);
-    --bs-btn-active-color: var(--heading-color);
-    --bs-btn-active-bg: var(--pill-bg);
-    --bs-btn-active-border-color: var(--pill-border);
+  .btn-tertiary {
+    --bs-btn-color: var(--accent-text);
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: var(--accent-text);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--accent);
+    --bs-btn-hover-border-color: var(--accent);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--accent-active);
+    --bs-btn-active-border-color: var(--accent-active);
+  }
+
+  .btn-quiet {
+    --bs-btn-color: var(--ink);
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: var(--ink);
+    --bs-btn-hover-bg: var(--surface-1);
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-color: var(--ink);
+    --bs-btn-active-bg: var(--surface-2);
+    --bs-btn-active-border-color: transparent;
+  }
+
+  /* White button for use on the accent-coloured contact band. */
+  .btn-on-accent {
+    --bs-btn-color: var(--accent);
+    --bs-btn-bg: #fff;
+    --bs-btn-border-color: #fff;
+    --bs-btn-hover-color: var(--accent-active);
+    --bs-btn-hover-bg: #e8efff;
+    --bs-btn-hover-border-color: #e8efff;
+    --bs-btn-active-color: var(--accent-active);
+    --bs-btn-active-bg: #d0e2ff;
+    --bs-btn-active-border-color: #d0e2ff;
   }
 
   .btn-icon {
     display: inline-grid;
     place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3rem;
     padding: 0;
-    border-radius: 999px;
     font-size: 1.15rem;
   }
 
-  /* Scroll-in animation used by the `appReveal` directive. */
+  /* Technology chip: a square tag on a tone step, no outline. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.25rem 0.75rem;
+    border: 0;
+    border-radius: 0;
+    font: inherit;
+    font-size: 0.875rem;
+    color: var(--ink);
+    background: var(--surface-1);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .band .chip {
+    background: var(--canvas);
+  }
+
+  button.chip {
+    cursor: pointer;
+  }
+
+  button.chip:hover {
+    background: var(--surface-2);
+  }
+
+  button.chip[aria-pressed='true'] {
+    color: #fff;
+    background: var(--accent);
+  }
+
+  /* Scroll-in animation used by the `appReveal` directive. Transform and opacity only. */
   .reveal {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(24px);
     transition:
-      opacity 0.7s ease var(--reveal-delay, 0ms),
-      transform 0.7s ease var(--reveal-delay, 0ms);
+      opacity 0.6s cubic-bezier(0.2, 0, 0.38, 0.9) var(--reveal-delay, 0ms),
+      transform 0.6s cubic-bezier(0.2, 0, 0.38, 0.9) var(--reveal-delay, 0ms);
   }
 
   .reveal.is-visible {
@@ -235,12 +298,10 @@
       transform: none;
       transition: none;
     }
-  }
 
-  @media (forced-colors: active) {
-    .text-gradient {
-      background: none;
-      color: CanvasText;
+    .btn,
+    .chip {
+      transition: none;
     }
   }
 
@@ -248,37 +309,30 @@
   @media print {
     :root,
     [data-bs-theme] {
-      --bs-body-bg: #fff;
-      --bs-body-color: #1e293b;
-      --heading-color: #0f172a;
-      --muted-color: #334155;
-      --brand-text: #1e293b;
-      --surface: #fff;
-      --surface-shadow: none;
-      --surface-border: #e2e8f0;
-    }
-
-    .no-print {
-      display: none !important;
+      --canvas: #fff;
+      --surface-1: #fff;
+      --ink: #000;
+      --ink-muted: #333;
+      --accent-text: #000;
+      --highlight: transparent;
     }
 
     .section {
-      padding-block: 1.25rem;
+      padding-block: 1rem;
     }
 
-    .surface {
-      backdrop-filter: none;
-      break-inside: avoid;
-    }
-
-    .text-gradient {
-      background: none;
-      color: #0f172a;
+    .display {
+      font-size: 2.5rem !important;
     }
 
     .reveal {
       opacity: 1 !important;
       transform: none !important;
+    }
+
+    article,
+    li {
+      break-inside: avoid;
     }
   }
 }

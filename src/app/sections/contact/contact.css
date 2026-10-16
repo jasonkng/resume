@@ -1,25 +1,25 @@
-.contact-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 2rem;
-  background:
-    radial-gradient(circle at 15% 20%, rgb(255 255 255 / 0.18), transparent 40%),
-    linear-gradient(120deg, color-mix(in oklab, var(--brand), black 18%), color-mix(in oklab, var(--brand-2), black 22%));
-  box-shadow: 0 30px 60px -30px color-mix(in oklab, var(--brand) 70%, transparent);
+/* The one section that changes the whole field colour: flat accent, white type. */
+.contact {
+  color: #fff;
+  background: var(--accent);
+}
+
+.contact h2 {
+  color: #fff;
 }
 
 @media print {
-  .contact-card {
+  .contact {
+    color: #000;
     background: none;
-    box-shadow: none;
-    border: 1px solid #e2e8f0;
   }
 
-  .contact-card * {
-    color: #0f172a !important;
+  .contact h2 {
+    color: #000;
   }
 
-  .contact-card .btn {
+  .contact .btn {
+    color: #000;
     border: 0;
     padding: 0;
   }

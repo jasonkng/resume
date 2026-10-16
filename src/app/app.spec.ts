@@ -14,10 +14,11 @@ describe('App', () => {
   });
 
   it('should render only visible sections, in the configured order', async () => {
+    const byId = (id: string) => RESUME.sections.find((section) => section.id === id)!;
     const sections = [
-      { ...RESUME.sections[2], visible: true },
-      { ...RESUME.sections[0], visible: false },
-      { ...RESUME.sections[1], visible: true },
+      { ...byId('experience'), visible: true },
+      { ...byId('about'), visible: false },
+      { ...byId('skills'), visible: true },
     ];
     await TestBed.configureTestingModule({
       imports: [App],

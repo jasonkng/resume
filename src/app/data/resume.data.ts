@@ -7,10 +7,9 @@ import { Resume } from './resume.model';
 export const RESUME: Resume = {
   profile: {
     name: 'Jason Kng',
-    initials: 'JK',
     title: 'Full Stack Developer',
     tagline:
-      'I design and deliver secure, scalable enterprise software with Java, Spring Boot and Angular — from reverse-engineering legacy identity systems to running them on Kubernetes and OpenShift.',
+      'I build secure, scalable enterprise platforms with Java, Spring Boot and Angular — from reverse-engineering legacy identity systems to running them on Kubernetes and OpenShift.',
     location: 'Singapore',
     email: 'jasonkngjunhui@hotmail.sg',
     // phone: '+65 0000 0000',
@@ -30,11 +29,11 @@ export const RESUME: Resume = {
   },
 
   sections: [
-    { id: 'about', label: 'About', title: 'Bridging product vision and engineering', visible: true },
-    { id: 'skills', label: 'Skills', title: 'Tools I build with', visible: true },
-    { id: 'experience', label: 'Experience', title: 'Where I have made an impact', visible: true },
-    { id: 'education', label: 'Education', title: 'Academic background', visible: true },
-    { id: 'contact', label: 'Contact', title: 'Get in touch', visible: true },
+    { id: 'about', label: 'About', title: 'About', visible: true },
+    { id: 'experience', label: 'Experience', title: 'Experience', visible: true },
+    { id: 'skills', label: 'Skills', title: 'Skills', visible: true },
+    { id: 'education', label: 'Education', title: 'Education', visible: true },
+    { id: 'contact', label: 'Contact', title: 'Contact', visible: true },
   ],
 
   summary: [
@@ -43,53 +42,21 @@ export const RESUME: Resume = {
   ],
 
   highlights: [
-    { value: '5+', label: 'Years building enterprise software' },
-    { value: '200K', label: 'Concurrent sessions supported' },
-    { value: '6-figure', label: 'Annual subscription savings' },
-    { value: '7', label: 'Developers led on the Citibank Taiwan delivery' },
+    { value: '200K', label: 'Concurrent sessions on the in-house identity platform' },
+    { value: '5+', label: 'Workstreams that now go live without a shell change' },
+    { value: '6-figure', label: 'Annual subscription costs saved' },
+    { value: '7', label: 'Developers led on the Citibank Taiwan migration' },
   ],
 
   skillGroups: [
-    { name: 'Languages', icon: 'code-slash', skills: ['Java', 'TypeScript', 'JavaScript', 'HTML', 'CSS'] },
-    {
-      name: 'Frameworks',
-      icon: 'layers',
-      skills: ['Spring', 'Spring Boot', 'Spring Data JPA', 'Hibernate', 'Angular', 'Angular Signals', 'RxJS'],
-    },
-    { name: 'Data & Caching', icon: 'database', skills: ['MySQL', 'MariaDB', 'Redis'] },
-    {
-      name: 'Architecture & Security',
-      icon: 'shield-lock',
-      skills: [
-        'REST APIs',
-        'Micro Frontends',
-        'Authentication & Authorization',
-        'OAuth 2.0',
-        'OpenID Connect',
-        'Token & Session Management',
-        'Shared Libraries',
-      ],
-    },
-    {
-      name: 'Containers & DevOps',
-      icon: 'boxes',
-      skills: ['Docker', 'Kubernetes', 'OpenShift', 'Jenkins', 'Nginx', 'Apache', 'Git', 'Maven', 'JFrog'],
-    },
-    {
-      name: 'Testing & Quality',
-      icon: 'check2-circle',
-      skills: [
-        'JUnit 5',
-        'Mockito',
-        'Spring Boot Test',
-        'Playwright',
-        'Jasmine',
-        'Karma',
-        'k6',
-        'SonarQube',
-        'Claude Code (AI-assisted testing)',
-      ],
-    },
+    { name: 'Languages', skills: ['Java', 'TypeScript', 'JavaScript', 'HTML', 'CSS'] },
+    { name: 'Frontend', skills: ['Angular', 'RxJS', 'Angular Signals', 'Module Federation'] },
+    { name: 'Backend', skills: ['Spring Boot', 'Spring', 'Spring Data JPA', 'Hibernate', 'OAuth 2.0/OIDC'] },
+    { name: 'Data', skills: ['MySQL', 'MariaDB', 'Redis'] },
+    { name: 'DevOps', skills: ['Docker', 'Kubernetes', 'OpenShift', 'Jenkins', 'Nginx', 'Apache', 'Maven', 'Git'] },
+    { name: 'Observability & quality', skills: ['OpenTelemetry', 'Kibana', 'SonarQube'] },
+    { name: 'Testing', skills: ['JUnit 5', 'Mockito', 'Spring Boot Test', 'Playwright', 'Jasmine', 'Karma', 'k6'] },
+    { name: 'Tools', skills: ['Claude Code', 'Figma'] },
   ],
 
   experience: [
@@ -98,22 +65,26 @@ export const RESUME: Resume = {
       company: 'DBS Bank Limited',
       start: 'May 2024',
       achievements: [
-        'Reverse-engineered and documented undocumented legacy and third-party identity systems, translating complex authentication and authorization flows into a scalable in-house Spring Boot and Angular platform supporting up to 200,000 concurrent sessions; implemented token and session management, Redis-based caching, and system integrations, delivering six-figure annual subscription cost savings.',
-        'Improved application deployment and runtime scalability by migrating services from manually managed virtual machine environments to Kubernetes/OpenShift, leveraging containerization and automated scaling to improve deployment reliability and operational efficiency.',
-        'Designed and developed full-stack features across Spring Boot and Angular, integrating multiple REST APIs and supporting frontend micro frontend architecture while collaborating with engineering teams to define API contracts and deliver scalable user-facing workflows.',
-        'Integrated AI-assisted development into unit and integration testing workflows across backend and frontend applications, accelerating test generation and refinement while validating results using JUnit 5, Mockito, Spring Boot Test, and Playwright.',
+        'Reverse-engineered legacy and third-party identity systems to build an in-house Spring Boot and Angular platform supporting up to 200,000 concurrent sessions; implemented OAuth 2.0/OIDC authentication, token/session management, and Redis caching, saving six figures in annual subscription costs.',
+        'Implemented a micro frontend architecture using Module Federation and Nginx routing, so 5+ workstreams can now go live independently, with no change request, package import, or full regression needed on the Angular shell.',
+        'Translated business requirements into full-stack features: defined edge-case behavior with UX in Figma, shaped data models and API contracts, and turned those edge cases into AI-assisted tests using Claude Code, validated with JUnit 5, Mockito, Spring Boot Test, and Playwright.',
+        'Migrated services end to end from manually managed VMs to Kubernetes/OpenShift, using containerization and automated scaling to improve deployment reliability, and added OpenTelemetry tracing across Angular and Spring Boot with logs centralized and searchable in Kibana.',
       ],
       tech: [
         'Spring Boot',
         'Angular',
-        'OAuth 2.0 / OIDC',
+        'OAuth 2.0/OIDC',
         'Redis',
-        'Kubernetes',
-        'OpenShift',
-        'Micro Frontends',
+        'Module Federation',
+        'Nginx',
+        'Figma',
+        'Claude Code',
         'JUnit 5',
         'Playwright',
-        'Claude Code',
+        'Kubernetes',
+        'OpenShift',
+        'OpenTelemetry',
+        'Kibana',
       ],
     },
     {
@@ -122,11 +93,11 @@ export const RESUME: Resume = {
       start: 'Sept 2021',
       end: 'Apr 2024',
       achievements: [
-        'Led a team of 7 developers in the end-to-end development of Citibank Taiwan processes on the DBS platform, driving frontend architecture decisions, collaborating with UX designers on interaction design, and delivering a production-ready solution within six months.',
-        'Designed and developed reusable Angular shared libraries to standardize common frontend functionality across applications, managing library versioning and publishing packages to JFrog for consumption by downstream applications.',
-        'Established automated unit and integration testing for shared frontend libraries using Jasmine and Karma, improving early bug detection by ~20% and strengthening code reliability and maintainability across consuming applications.',
+        'Led a team of 7 developers across frontend architecture, UX design, and backend integration to migrate Citibank Taiwan processes from an external platform to DBS’s in-house platform, ensuring compliance with internal design standards and delivery within six months.',
+        'Owned and standardized a shared Angular dropdown component in an internal UI library, migrating inconsistent single- and multi-value handling to Angular ControlValueAccessor for consistent form integration and reusable value management across consuming applications.',
+        'Early adopter of AI-assisted development, leveraging AI to generate and refine unit and integration test cases for shared Angular libraries using Jasmine and Karma, improving test coverage and supporting earlier bug detection across consuming applications.',
       ],
-      tech: ['Angular', 'TypeScript', 'Shared Libraries', 'JFrog', 'Jasmine', 'Karma'],
+      tech: ['Angular', 'ControlValueAccessor', 'Jasmine', 'Karma'],
     },
     {
       role: 'BIM & 3D Printing Engineer',
@@ -134,10 +105,10 @@ export const RESUME: Resume = {
       start: 'Sept 2019',
       end: 'Aug 2020',
       achievements: [
-        'Developed an Android-based QR-scanning application and integrated it with IBIS (Integrated Building Information System), a BIM-enabled construction workflow platform, to support logistics integration testing, replacing handheld scanners and reducing testing time by approximately 75%.',
-        'Designed and modeled 3D-printable architectural components for housing, leveraging Revit, Rhino/Grasshopper, and Dynamo for BIM, parametric design, and automated geometry generation.',
+        'Collaborated with Housing & Development Board (HDB) to design and prototype IBIS, an innovative web application that optimizes construction workflows, streamlines processes, and enhances operational efficiency.',
+        'Engineered an Android application to replace the handheld QR scanner for seamless integration testing with IBIS, streamlining the process and reducing the testing timeline by approximately 75%.',
       ],
-      tech: ['Android', 'QR Scanning', 'Revit', 'Rhino/Grasshopper', 'Dynamo'],
+      tech: ['Android', 'IBIS'],
     },
   ],
 
@@ -159,8 +130,8 @@ export const RESUME: Resume = {
   ],
 
   contact: {
-    heading: "Let's build something great together",
+    heading: 'Let’s build something together',
     message:
-      "Whether it's a full-stack role, a platform modernisation, or a tricky identity integration, I'd love to hear about it.",
+      'Whether it’s a full-stack role, a platform migration or an identity integration, I’d like to hear about it.',
   },
 };

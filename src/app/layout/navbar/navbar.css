@@ -6,31 +6,46 @@
 }
 
 .site-header {
-  border-bottom: 1px solid transparent;
+  background-color: var(--canvas);
+  transition: background-color 0.2s ease;
+}
+
+/* A tone step, not a line or a shadow, separates the bar from the page once you scroll. */
+.site-header.is-scrolled {
+  background-color: var(--surface-1);
+}
+
+.wordmark {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav-tab {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  padding-inline: 1rem;
+  color: var(--ink-muted);
+  box-shadow: inset 0 -2px 0 transparent;
   transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    backdrop-filter 0.3s ease;
+    color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-.site-header.is-solid {
-  background-color: color-mix(in srgb, var(--bs-body-bg) 82%, transparent);
-  border-bottom-color: var(--surface-border);
-  backdrop-filter: blur(14px);
+.nav-tab:hover {
+  color: var(--ink);
 }
 
-.nav-pill {
-  border-radius: 999px;
-  padding-inline: 0.9rem;
-  font-weight: 500;
-  color: var(--muted-color);
-  transition:
-    color 0.2s ease,
-    background-color 0.2s ease;
+.nav-tab.active {
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--accent);
 }
 
-.nav-pill:hover,
-.nav-pill.active {
-  color: var(--heading-color);
-  background-color: var(--pill-bg);
+@media (min-width: 992px) {
+  .nav-tab {
+    min-height: 4rem;
+  }
 }

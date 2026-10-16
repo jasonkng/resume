@@ -1,105 +1,76 @@
-<section id="top" class="hero position-relative overflow-hidden" aria-labelledby="hero-title">
-  <div class="hero-backdrop no-print" aria-hidden="true">
-    <span class="blob blob-1"></span>
-    <span class="blob blob-2"></span>
-    <span class="grid-overlay"></span>
-  </div>
+<section id="top" class="hero" aria-labelledby="hero-title">
+  <div class="container-wide">
+    @if (profile.avatarUrl) {
+      <img
+        class="d-block mb-4 tw:size-24 tw:object-cover"
+        [ngSrc]="profile.avatarUrl"
+        width="96"
+        height="96"
+        priority
+        [alt]="'Photo of ' + profile.name"
+      />
+    }
 
-  <div class="container position-relative">
-    <div class="row align-items-center g-5">
-      <div class="col-lg-6" appReveal>
-        @if (profile.avatarUrl) {
-          <img
-            class="d-block mb-4 tw:size-24 tw:rounded-full tw:object-cover tw:ring-4 tw:ring-brand/20"
-            [ngSrc]="profile.avatarUrl"
-            width="96"
-            height="96"
-            priority
-            [alt]="'Photo of ' + profile.name"
-          />
-        }
-        @if (profile.availability) {
-          <p class="pill mb-4 no-print">
-            <span class="tw:relative tw:flex tw:size-2.5" aria-hidden="true">
-              <span class="tw:absolute tw:inline-flex tw:size-full tw:rounded-full tw:bg-emerald-400 tw:opacity-75 tw:motion-safe:animate-ping"></span>
-              <span class="tw:relative tw:inline-flex tw:size-2.5 tw:rounded-full tw:bg-emerald-500"></span>
-            </span>
-            {{ profile.availability }}
-          </p>
-        }
+    <h1 id="hero-title" class="display hero-name mb-0" appReveal>{{ profile.name }}</h1>
 
-        <h1 id="hero-title" class="tw:text-5xl tw:sm:text-6xl tw:xl:text-7xl tw:font-bold tw:leading-[1.05] mb-3">
-          <span class="text-gradient">{{ profile.name }}</span>
-        </h1>
-
-        <p class="tw:text-xl tw:md:text-2xl tw:font-medium tw:text-heading mb-3">
+    <div class="row g-4 g-lg-5 align-items-start tw:mt-6 tw:lg:mt-10">
+      <div class="col-lg-6">
+        <p class="tw:text-xl tw:md:text-2xl tw:text-ink mb-3" appReveal="80">
           {{ profile.title }}
           @if (profile.location) {
-            <span class="tw:text-muted tw:font-normal">
-              <span aria-hidden="true">·</span>
-              <i class="bi bi-geo-alt ms-1" aria-hidden="true"></i>
-              {{ profile.location }}
-            </span>
+            <span class="tw:text-muted"> · {{ profile.location }}</span>
+          }
+          @if (profile.availability) {
+            <span class="tw:text-muted"> · {{ profile.availability }}</span>
           }
         </p>
 
-        <p class="tw:text-lg tw:text-muted tw:max-w-2xl mb-4 mb-lg-5">{{ profile.tagline }}</p>
+        <p class="tw:text-lg tw:md:text-xl tw:leading-relaxed tw:text-ink tw:max-w-[38rem] mb-4 mb-lg-5" appReveal="160">
+          {{ profile.tagline }}
+        </p>
 
-        <div class="d-flex flex-wrap gap-3 mb-4 no-print">
+        <div class="d-flex flex-wrap gap-2 no-print" appReveal="240">
           @if (profile.email) {
-            <a class="btn btn-brand btn-lg tw:rounded-full tw:px-6" [href]="'mailto:' + profile.email">
-              <i class="bi bi-envelope-fill me-2" aria-hidden="true"></i>Get in touch
+            <a class="btn btn-accent d-inline-flex align-items-center gap-3" [href]="'mailto:' + profile.email">
+              Email Me <i class="bi bi-arrow-right" aria-hidden="true"></i>
             </a>
           }
-          <button type="button" class="btn btn-ghost btn-lg tw:rounded-full tw:px-6" (click)="print()">
-            <i class="bi bi-file-earmark-arrow-down me-2" aria-hidden="true"></i>Save as PDF
+          <button type="button" class="btn btn-tertiary d-inline-flex align-items-center gap-2" (click)="print()">
+            Save as PDF <i class="bi bi-download" aria-hidden="true"></i>
           </button>
-        </div>
-
-        <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0 no-print" aria-label="Profiles">
           @for (link of profile.links; track link.url) {
-            <li>
-              <a
-                class="btn btn-ghost btn-icon"
-                [href]="link.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                [attr.aria-label]="link.label + ' (opens in a new tab)'"
-                [attr.title]="link.label"
-              >
-                <i [class]="'bi bi-' + link.icon" aria-hidden="true"></i>
-              </a>
-            </li>
+            <a
+              class="btn btn-quiet btn-icon"
+              [href]="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="link.label + ' (opens in a new tab)'"
+              [attr.title]="link.label"
+            >
+              <i [class]="'bi bi-' + link.icon" aria-hidden="true"></i>
+            </a>
           }
-        </ul>
+        </div>
       </div>
 
-      <div class="col-lg-6 d-none d-lg-block no-print" appReveal="150">
-        <div class="code-card surface tw:overflow-hidden" aria-hidden="true">
-          <div class="d-flex align-items-center gap-2 px-4 py-3 code-card-bar">
-            <span class="dot tw:bg-rose-400"></span>
-            <span class="dot tw:bg-amber-400"></span>
-            <span class="dot tw:bg-emerald-400"></span>
-            <span class="ms-2 tw:text-xs tw:text-muted tw:font-mono">developer.ts</span>
-          </div>
-          <div class="code px-4 py-4 tw:font-mono tw:text-[0.8125rem] tw:leading-7">
-            <div><span class="tk-kw">const</span>&nbsp;<span class="tk-var">developer</span> = &#123;</div>
-            <div class="ps-4"><span class="tk-key">name</span>: <span class="tk-str">'{{ profile.name }}'</span>,</div>
-            <div class="ps-4"><span class="tk-key">role</span>: <span class="tk-str">'{{ profile.title }}'</span>,</div>
-            @if (profile.location) {
-              <div class="ps-4"><span class="tk-key">location</span>: <span class="tk-str">'{{ profile.location }}'</span>,</div>
-            }
-            <div class="ps-4"><span class="tk-key">stack</span>: &#123;</div>
-            @for (group of profile.featuredStack; track group.label) {
-              <div class="code-wrap">
-                <span class="tk-key">{{ group.label }}</span>: [@for (item of group.items; track item; let last = $last) {<span class="tk-str tw:whitespace-nowrap">'{{ item }}'</span>@if (!last) {, }}],
-              </div>
-            }
-            <div class="ps-4">&#125;,</div>
-            <div class="ps-4"><span class="tk-key">openToWork</span>: <span class="tk-kw">{{ !!profile.availability }}</span>,</div>
-            <div>&#125;;</div>
-          </div>
-        </div>
+      <div class="col-lg-6 d-none d-md-block no-print" appReveal="320">
+        <code class="code-block" translate="no" aria-hidden="true">
+          <span class="line"><span class="tk-kw">const</span>&nbsp;<span class="tk-var">developer</span> = &#123;</span>
+          <span class="line ps-4"><span class="tk-key">name</span>: <span class="tk-str">'{{ profile.name }}'</span>,</span>
+          <span class="line ps-4"><span class="tk-key">role</span>: <span class="tk-str">'{{ profile.title }}'</span>,</span>
+          @if (profile.location) {
+            <span class="line ps-4"><span class="tk-key">location</span>: <span class="tk-str">'{{ profile.location }}'</span>,</span>
+          }
+          <span class="line ps-4"><span class="tk-key">stack</span>: &#123;</span>
+          @for (group of profile.featuredStack; track group.label) {
+            <span class="line code-wrap">
+              <span class="tk-key">{{ group.label }}</span>: [@for (item of group.items; track item; let last = $last) {<span class="tk-str tw:whitespace-nowrap">'{{ item }}'</span>@if (!last) {, }}],
+            </span>
+          }
+          <span class="line ps-4">&#125;,</span>
+          <span class="line ps-4"><span class="tk-key">openToWork</span>: <span class="tk-kw">{{ !!profile.availability }}</span>,</span>
+          <span class="line">&#125;;</span>
+        </code>
       </div>
     </div>
   </div>

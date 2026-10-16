@@ -1,52 +1,52 @@
 <section class="section" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
-  <div class="container">
-    <app-section-heading [eyebrow]="config().label" [title]="config().title" [headingId]="config().id + '-title'" />
+  <div class="container-wide">
+    <app-section-heading [title]="config().title" [headingId]="config().id + '-title'" />
 
-    <ol class="timeline list-unstyled mb-0">
-      @for (job of jobs; track $index) {
-        <li class="timeline-item" appReveal>
-          <span class="timeline-dot" [class.is-current]="!job.end" aria-hidden="true"></span>
+    <div class="tw:mb-16 tw:lg:mb-24 no-print" role="group" aria-labelledby="tech-filter-label" appReveal>
+      <p id="tech-filter-label" class="tw:text-lg tw:text-ink mb-3">Pick a technology to highlight where I used it.</p>
+      <div class="d-flex flex-wrap align-items-center gap-2">
+        @for (tech of technologies; track tech) {
+          <button type="button" class="chip" translate="no" [attr.aria-pressed]="selected() === tech" (click)="toggle(tech)">
+            {{ tech }}
+          </button>
+        }
+        @if (selected()) {
+          <button type="button" class="btn btn-quiet btn-sm tw:min-h-8 tw:underline" (click)="clear()">Clear</button>
+        }
+      </div>
+      <p class="tw:text-base tw:text-muted tw:min-h-6 tw:mt-3 mb-0" aria-live="polite">{{ status() }}</p>
+    </div>
 
-          <article class="surface p-4 p-md-5">
-            <header class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
-              <div>
-                <h3 class="tw:text-xl tw:md:text-2xl tw:font-semibold mb-1">{{ job.role }}</h3>
-                <p class="tw:text-muted tw:font-medium mb-0">
-                  <i class="bi bi-building me-1" aria-hidden="true"></i>{{ job.company }}
-                </p>
+    @for (group of groups; track group.company) {
+      <article class="employer row g-4 g-lg-5">
+        <div class="col-lg-4" appReveal>
+          <h3 class="tw:text-3xl tw:md:text-4xl mb-2">{{ group.company }}</h3>
+          <p class="tw:text-lg tw:text-muted tabular mb-0">{{ group.start }} – {{ group.end ?? 'Present' }}</p>
+        </div>
+
+        <div class="col-lg-8">
+          @for (role of group.roles; track role.role) {
+            <div class="role" appReveal="90">
+              <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+                <h4 class="tw:text-2xl tw:font-normal mb-0">{{ role.role }}</h4>
+                <p class="tw:text-muted tabular mb-0">{{ role.start }} – {{ role.end ?? 'Present' }}</p>
               </div>
-              <div class="d-flex flex-wrap gap-2">
-                @if (!job.end) {
-                  <span class="pill tw:bg-emerald-500/15 tw:border-emerald-500/30 tw:text-emerald-800 tw:dark:text-emerald-300">
-                    Current
-                  </span>
+
+              <ul class="achievements list-unstyled mb-4">
+                @for (achievement of role.achievements; track $index) {
+                  <li class="achievement tw:text-lg tw:text-ink" [class.is-match]="isMatch(achievement)">{{ achievement }}</li>
                 }
-                <span class="pill">
-                  <i class="bi bi-calendar3" aria-hidden="true"></i>
-                  {{ job.start }} – {{ job.end ?? 'Present' }}
-                </span>
-              </div>
-            </header>
+              </ul>
 
-            <ul class="achievements list-unstyled mb-4">
-              @for (achievement of job.achievements; track $index) {
-                <li class="d-flex gap-3 mb-3">
-                  <i class="bi bi-check2-circle tw:text-brand-text tw:text-lg tw:leading-snug" aria-hidden="true"></i>
-                  <span>{{ achievement }}</span>
-                </li>
-              }
-            </ul>
-
-            <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0" [attr.aria-label]="'Technologies used at ' + job.company">
-              @for (tech of job.tech; track tech) {
-                <li class="badge rounded-pill tw:bg-brand/10 tw:text-brand-text tw:font-medium tw:px-3 tw:py-2">
-                  {{ tech }}
-                </li>
-              }
-            </ul>
-          </article>
-        </li>
-      }
-    </ol>
+              <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0" [attr.aria-label]="'Technologies used as ' + role.role">
+                @for (tech of role.tech; track tech) {
+                  <li class="chip" translate="no" [class.is-selected]="selected() === tech">{{ tech }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      </article>
+    }
   </div>
 </section>

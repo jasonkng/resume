@@ -1,3 +1,24 @@
+/* The site closes on a charcoal field with the name returning at full width. */
 .site-footer {
-  border-top: 1px solid var(--surface-border);
+  padding-block: clamp(4rem, 8vw, 6rem) 2rem;
+  color: #c6c6c6;
+  background: var(--footer-bg);
+}
+
+.footer-name {
+  font-size: clamp(4rem, 16.5vw, 16rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  margin-left: -0.04em;
+  color: #f4f4f4;
+}
+
+.footer-link {
+  color: #f4f4f4;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }

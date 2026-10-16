@@ -1,17 +1,17 @@
 import { Component, input } from '@angular/core';
+import { Reveal } from '../reveal';
 
 @Component({
+  imports: [Reveal],
   selector: 'app-section-heading',
-  host: { class: 'tw:block tw:mb-10 tw:lg:mb-12' },
+  host: { class: 'tw:block tw:mb-12 tw:lg:mb-16' },
   template: `
-    <p class="eyebrow mb-2">{{ eyebrow() }}</p>
-    <h2 [id]="headingId()" class="tw:text-3xl tw:md:text-5xl tw:font-bold tw:text-heading mb-0">
+    <h2 [id]="headingId()" class="display tw:text-5xl tw:md:text-7xl tw:xl:text-8xl tw:text-ink mb-0" appReveal>
       {{ title() }}
     </h2>
   `,
 })
 export class SectionHeading {
-  readonly eyebrow = input.required<string>();
   readonly title = input.required<string>();
   readonly headingId = input.required<string>();
 }

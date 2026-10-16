@@ -1,91 +1,55 @@
 .hero {
-  padding-block: clamp(8rem, 16vw, 11rem) clamp(4rem, 9vw, 7rem);
+  padding-block: clamp(6rem, 10vw, 8rem) clamp(4rem, 9vw, 7rem);
 }
 
-.hero-backdrop {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+/* The name runs nearly edge to edge: the one dominant thing on the first screen. */
+.hero-name {
+  font-size: clamp(4.25rem, 19.5vw, 20rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  margin-left: -0.04em;
 }
 
-.blob {
-  position: absolute;
-  border-radius: 999px;
-  filter: blur(80px);
-  opacity: 0.35;
-}
-
-.blob-1 {
-  width: 32rem;
-  height: 32rem;
-  top: -10rem;
-  left: -8rem;
-  background: var(--brand);
-}
-
-.blob-2 {
-  width: 28rem;
-  height: 28rem;
-  top: 4rem;
-  right: -10rem;
-  background: var(--brand-2);
-}
-
-.grid-overlay {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 70%);
-}
-
-.code-card-bar {
-  border-bottom: 1px solid var(--surface-border);
-}
-
-.dot {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 999px;
-}
-
-.code {
-  color: var(--bs-body-color);
+.code-block {
+  display: block;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  font-family: var(--mono-font);
+  font-size: 0.875rem;
+  line-height: 1.75;
+  letter-spacing: 0;
+  color: #f4f4f4;
+  background: var(--code-bg);
   overflow-x: auto;
 }
 
-/* Second-level code line that soft-wraps with a hanging indent, like an editor. */
+.line {
+  display: block;
+}
+
+/* Second-level line that soft-wraps with a hanging indent, like an editor. */
 .code-wrap {
   padding-left: calc(3rem + 2ch);
   text-indent: -2ch;
 }
 
 .tk-kw {
-  color: #c026d3;
+  color: #ff7eb6;
 }
 
 .tk-var {
-  color: var(--brand-text);
+  color: #33b1ff;
 }
 
 .tk-key {
-  color: #0369a1;
+  color: #78a9ff;
 }
 
 .tk-str {
-  color: #047857;
+  color: #42be65;
 }
 
-:host-context([data-bs-theme='dark']) .tk-kw {
-  color: #f0abfc;
-}
-
-:host-context([data-bs-theme='dark']) .tk-key {
-  color: #7dd3fc;
-}
-
-:host-context([data-bs-theme='dark']) .tk-str {
-  color: #6ee7b7;
+@media print {
+  .hero {
+    padding-block: 0 1rem;
+  }
 }

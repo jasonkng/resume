@@ -1,10 +1,9 @@
-<footer class="site-footer py-4 no-print">
-  <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
-    <p class="tw:text-sm tw:text-muted mb-0">
-      © {{ profile.name }} · Built with Angular, Bootstrap &amp; Tailwind CSS
-    </p>
-    <a class="btn btn-ghost btn-sm tw:rounded-full tw:px-3" href="#top">
-      <i class="bi bi-arrow-up me-1" aria-hidden="true"></i>Back to top
-    </a>
+<footer class="site-footer no-print">
+  <div class="container-wide">
+    <p class="footer-name display mb-4" aria-hidden="true">{{ profile.name }}</p>
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-3 tw:text-sm">
+      <p class="mb-0">© {{ profile.name }} · Built with Angular, Bootstrap &amp; Tailwind CSS</p>
+      <a class="footer-link" href="#top">Back to Top <i class="bi bi-arrow-up ms-1" aria-hidden="true"></i></a>
+    </div>
   </div>
 </footer>

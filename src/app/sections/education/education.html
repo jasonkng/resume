@@ -1,20 +1,17 @@
 <section class="section" [id]="config().id" [attr.aria-labelledby]="config().id + '-title'">
-  <div class="container">
-    <app-section-heading [eyebrow]="config().label" [title]="config().title" [headingId]="config().id + '-title'" />
+  <div class="container-wide">
+    <app-section-heading [title]="config().title" [headingId]="config().id + '-title'" />
 
-    <div class="row g-4">
+    <div class="row g-4 g-lg-5">
       @for (entry of education; track $index; let i = $index) {
-        <div class="col-md-6" [appReveal]="i * 90">
-          <article class="surface h-100 p-4 p-md-5 d-flex gap-4 tw:transition tw:duration-300 tw:hover:-translate-y-1">
-            <span class="icon-tile" aria-hidden="true"><i class="bi bi-mortarboard"></i></span>
-            <div>
-              <p class="pill mb-3">{{ entry.start === entry.end ? entry.end : entry.start + ' – ' + entry.end }}</p>
-              <h3 class="tw:text-xl tw:font-semibold mb-1">{{ entry.degree }}</h3>
-              <p class="tw:text-heading tw:font-medium mb-1">{{ entry.field }}</p>
-              <p class="tw:text-muted mb-0">{{ entry.school }}</p>
-            </div>
-          </article>
-        </div>
+        <article class="col-md-6" [appReveal]="i * 90">
+          <p class="tw:text-lg tw:text-muted tabular mb-2">
+            {{ entry.start === entry.end ? entry.end : entry.start + ' – ' + entry.end }}
+          </p>
+          <h3 class="tw:text-3xl tw:md:text-4xl mb-3">{{ entry.degree }}</h3>
+          <p class="tw:text-lg tw:text-ink mb-1">{{ entry.field }}</p>
+          <p class="tw:text-lg tw:text-muted mb-0">{{ entry.school }}</p>
+        </article>
       }
     </div>
   </div>

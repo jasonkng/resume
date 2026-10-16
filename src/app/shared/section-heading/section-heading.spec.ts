@@ -10,8 +10,7 @@ describe('SectionHeading', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(SectionHeading);
-    fixture.componentRef.setInput('eyebrow', 'Skills');
-    fixture.componentRef.setInput('title', 'Tools I build with');
+    fixture.componentRef.setInput('title', 'Skills');
     fixture.componentRef.setInput('headingId', 'skills-title');
     await fixture.whenStable();
   });
@@ -19,6 +18,6 @@ describe('SectionHeading', () => {
   it('should render an h2 with the given id and title', () => {
     const heading = (fixture.nativeElement as HTMLElement).querySelector('h2');
     expect(heading?.id).toBe('skills-title');
-    expect(heading?.textContent?.trim()).toBe('Tools I build with');
+    expect(heading?.textContent?.trim()).toBe('Skills');
   });
 });
